@@ -1,15 +1,18 @@
-# BalkanCZ Problem-First Triage Demo
+# Asistenta.cz / BalkanCZ — Problem-First Demo
 
-Mobile-first React + Tailwind demo centered on life events and document triage rather than an expert directory.
+Mobile-first React + Tailwind demo for Ex-Yu and Romanian communities living in Czechia. The first step is education and a free document assessment; the demo does not display fixed prices or shopping carts.
 
 ## Included
 
-- contact form with e-mail consent
+- bilingual Ex-Yu / Romanian language toggle
+- reassuring hero and emergency letter-check action
+- free-first-step flow with no fixed price tags
+- contact form with e-mail, phone/WhatsApp, communication language and consent
 - PDF/JPG/PNG upload validation (3 MB client limit)
 - Vercel `/api/submit` proxy that keeps the Make webhook URL out of the browser
-- clickable life-event problem cards
-- 3-tier service model and demo pricing cards
-- interactive triage modal for “Rodilo mi se dijete”
+- six expandable life-event problem cards with basic rules and alert tags
+- community board snippet with category filters
+- mobile-first intake modal with camera-friendly upload
 - Make.com setup guide in [`MAKE_SETUP.md`](./MAKE_SETUP.md)
 
 React, Babel, Tailwind and Lucide are loaded via CDN. Vercel automatically detects the `api/submit.js` serverless function.
