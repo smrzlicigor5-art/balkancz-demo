@@ -25,13 +25,17 @@ Frontend šalje dokument na `/api/submit`. Vercel proxy uklanja sirovi `data_url
 ```json
 {
   "source": "balkancz-vercel-demo",
+  "language": "exyu",
+  "communication_language": "exyu",
   "submitted_at": "2026-09-22T12:00:00.000Z",
   "client": {
     "name": "Ana Horvat",
     "email": "ana@example.com",
     "phone": "+420 777 123 456"
   },
-  "problem": "Dobio/la sam pismo od úřada",
+  "problem": "Pismo od úřada / Datová schránka",
+  "problem_id": "letter",
+  "description": "Ne razumijem rok za odgovor.",
   "consent": true,
   "document": {
     "filename": "dopis.pdf",
