@@ -109,7 +109,7 @@
           name: 'Ime i prezime',
           nameHint: 'opcionalno',
           phone: 'Broj telefona / WhatsApp',
-          phoneHint: 'preporučeno za brži odgovor',
+          phoneHint: 'važno za brzi odgovor',
           email: 'E-mail',
           emailHint: 'za potvrdu zahtjeva',
           language: 'Jezik komunikacije',
@@ -128,7 +128,7 @@
           security: 'Dokumente pregledava samo naš ovlašteni tim. Nemoj slati više osobnih podataka nego što je potrebno.',
           close: 'Zatvori',
           missingFile: 'Prvo dodaj sliku ili PDF dokument.',
-          missingBasics: 'Unesi e-mail, prihvati kontakt i dodaj dokument.',
+          missingBasics: 'Unesi e-mail i telefon, prihvati kontakt i dodaj dokument.',
           invalidFile: 'Molimo odaberi PDF, JPG ili PNG dokument.',
           tooLarge: 'Dokument je prevelik. Maksimalna veličina je 3 MB.',
           success: 'Zahtjev je zaprimljen. Poslali smo potvrdu na tvoj e-mail.',
@@ -190,7 +190,7 @@
           name: 'Nume și prenume',
           nameHint: 'opțional',
           phone: 'Telefon / WhatsApp',
-          phoneHint: 'recomandat pentru un răspuns mai rapid',
+          phoneHint: 'important pentru un răspuns rapid',
           email: 'E-mail',
           emailHint: 'pentru confirmarea cererii',
           language: 'Limba de comunicare',
@@ -209,7 +209,7 @@
           security: 'Documentele sunt verificate doar de echipa noastră autorizată. Nu trimite mai multe date personale decât este necesar.',
           close: 'Închide',
           missingFile: 'Adaugă mai întâi o fotografie sau un PDF.',
-          missingBasics: 'Introdu e-mailul, acceptă contactul și adaugă documentul.',
+          missingBasics: 'Introdu e-mailul și telefonul, acceptă contactul și adaugă documentul.',
           invalidFile: 'Alege un document PDF, JPG sau PNG.',
           tooLarge: 'Documentul este prea mare. Dimensiunea maximă este de 3 MB.',
           success: 'Solicitarea a fost primită. Am trimis confirmarea pe e-mail.',
@@ -305,6 +305,10 @@
       const currentCard = card => card[lang];
       const selectedProblemTitle = form.problem ? (problems.find(problem => problem.id === form.problem)?.[lang]?.title || form.problem) : '';
       const updateField = (field, value) => setForm(previous => ({ ...previous, [field]: value }));
+      const changeLanguage = nextLanguage => {
+        setLang(nextLanguage);
+        updateField('communication', nextLanguage === 'ro' ? 'ro' : 'exyu');
+      };
 
       const openIntake = (problemId = '') => {
         updateField('problem', problemId);
@@ -340,7 +344,7 @@
           setSubmission({ state: 'error', message: c.form.missingFile });
           return;
         }
-        if (!form.email.trim() || !form.consent) {
+        if (!form.email.trim() || !form.phone.trim() || !form.consent) {
           setSubmission({ state: 'error', message: c.form.missingBasics });
           return;
         }
@@ -398,8 +402,8 @@
               </nav>
               <div className="flex shrink-0 items-center gap-2">
                 <div className="flex items-center rounded-full border border-slate-200 bg-slate-100 p-1 text-xs font-bold" role="group" aria-label="Language switcher">
-                  <button type="button" onClick={() => setLang('exyu')} aria-pressed={lang === 'exyu'} className={cx('rounded-full px-2.5 py-1.5 transition sm:px-3', lang === 'exyu' ? 'bg-white text-trust-700 shadow-sm' : 'text-slate-500 hover:text-slate-800')}>🇧🇦 🇭🇷 <span className="hidden sm:inline">Ex-Yu</span></button>
-                  <button type="button" onClick={() => setLang('ro')} aria-pressed={lang === 'ro'} className={cx('rounded-full px-2.5 py-1.5 transition sm:px-3', lang === 'ro' ? 'bg-white text-trust-700 shadow-sm' : 'text-slate-500 hover:text-slate-800')}>🇷🇴 <span className="hidden sm:inline">Română</span></button>
+                  <button type="button" onClick={() => changeLanguage('exyu')} aria-pressed={lang === 'exyu'} className={cx('rounded-full px-2.5 py-1.5 transition sm:px-3', lang === 'exyu' ? 'bg-white text-trust-700 shadow-sm' : 'text-slate-500 hover:text-slate-800')}>🇧🇦 🇭🇷 <span className="hidden sm:inline">Ex-Yu</span></button>
+                  <button type="button" onClick={() => changeLanguage('ro')} aria-pressed={lang === 'ro'} className={cx('rounded-full px-2.5 py-1.5 transition sm:px-3', lang === 'ro' ? 'bg-white text-trust-700 shadow-sm' : 'text-slate-500 hover:text-slate-800')}>🇷🇴 <span className="hidden sm:inline">Română</span></button>
                 </div>
                 <button type="button" onClick={() => openIntake()} className="hidden items-center gap-2 rounded-xl bg-amber-500 px-3 py-2.5 text-xs font-extrabold text-white shadow-sm transition hover:bg-amber-600 focus:outline-none focus:ring-4 focus:ring-amber-100 sm:inline-flex sm:px-4 sm:text-sm"><Icon name="Siren" className="h-4 w-4" />{c.emergency}</button>
               </div>
@@ -466,7 +470,7 @@
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="block text-sm font-extrabold text-slate-700">{c.form.name} <span className="font-normal text-slate-400">({c.form.nameHint})</span><input value={form.name} onChange={event => updateField('name', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder={lang === 'ro' ? 'Numele tău' : 'Tvoje ime'} /></label>
                   <label className="block text-sm font-extrabold text-slate-700">{c.form.email} <span className="text-red-500">*</span><span className="block text-xs font-normal text-slate-400">{c.form.emailHint}</span><input type="email" required value={form.email} onChange={event => updateField('email', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder="vi@email.com" /></label>
-                  <label className="block text-sm font-extrabold text-slate-700">{c.form.phone} <span className="block text-xs font-normal text-slate-400">{c.form.phoneHint}</span><input type="tel" value={form.phone} onChange={event => updateField('phone', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder="+420 …" /></label>
+                  <label className="block text-sm font-extrabold text-slate-700">{c.form.phone} <span className="text-red-500">*</span><span className="block text-xs font-normal text-slate-400">{c.form.phoneHint}</span><input type="tel" required value={form.phone} onChange={event => updateField('phone', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder="+420 …" /></label>
                   <label className="block text-sm font-extrabold text-slate-700">{c.form.language}<select value={form.communication} onChange={event => updateField('communication', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100"><option value="exyu">🇧🇦 🇭🇷 🇷🇸 Ex-Yu</option><option value="ro">🇷🇴 Română</option><option value="cs">Češki / Čeština</option></select></label>
                 </div>
                 <label className="block text-sm font-extrabold text-slate-700">{c.form.problem}<select value={form.problem} onChange={event => updateField('problem', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100"><option value="">{c.form.chooseProblem}</option>{problems.map(problem => <option key={problem.id} value={problem.id}>{problem[lang].title}</option>)}<option value="other">{c.form.unsure}</option></select></label>
