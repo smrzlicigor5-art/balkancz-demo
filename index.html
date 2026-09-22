@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#1E40AF" />
-  <title>BalkanCZ Asistent — Pomoć u Češkoj</title>
-  <meta name="description" content="BalkanCZ Asistent povezuje jednostavno objašnjenje, AI pomoć i verificirane stručnjake za ljude iz Ex-Yu regije i Rumunjske u Češkoj." />
+  <meta name="theme-color" content="#1B4F91" />
+  <title>BalkanCZ — Birokracija u Češkoj bez stresa</title>
+  <meta name="description" content="Besplatna procjena dokumenata za Ex-Yu i rumunjske iseljenike u Češkoj." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -16,41 +19,41 @@
       theme: {
         extend: {
           colors: {
-            trust: {
-              50: '#eff6ff',
-              100: '#dbeafe',
-              200: '#bfdbfe',
-              300: '#93c5fd',
-              500: '#2563eb',
-              600: '#1E40AF',
-              700: '#1e3a8a',
-              900: '#172554'
-            },
-            safe: {
-              50: '#ecfdf5',
-              100: '#d1fae5',
-              600: '#059669',
-              700: '#047857'
-            }
+            trust: { DEFAULT: '#1B4F91', dark: '#123A6B', light: '#EAF1FB' },
+            sky: { DEFAULT: '#3D7DD8', light: '#EFF5FD' },
+            amber: { DEFAULT: '#E2811E', dark: '#B8650F', light: '#FCF0E1' },
+            ink: { DEFAULT: '#10192B', soft: '#4A5568', faint: '#8592A6' },
+            paper: '#F7F9FC',
+            line: '#E1E7EF'
+          },
+          fontFamily: {
+            display: ['Manrope', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            body: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
           },
           boxShadow: {
-            soft: '0 12px 34px rgba(15, 23, 42, .08)',
-            lift: '0 22px 60px rgba(30, 64, 175, .16)'
-          }
+            trust: '0 8px 24px -8px rgba(27, 79, 145, .28)',
+            'trust-sm': '0 4px 12px -4px rgba(27, 79, 145, .18)',
+            card: '0 2px 8px -2px rgba(16, 25, 43, .08)'
+          },
+          borderRadius: { card: '16px', item: '10px' }
         }
       }
     };
   </script>
   <style>
-    body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    html { scroll-behavior: smooth; }
-    .scrollbar-hide::-webkit-scrollbar { display: none; }
-    .scrollbar-hide { scrollbar-width: none; }
-    .safe-bottom { padding-bottom: max(1.25rem, env(safe-area-inset-bottom)); }
+    * { scroll-behavior: smooth; }
+    body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+    .font-display { font-family: Manrope, ui-sans-serif, system-ui, sans-serif; }
+    :focus-visible { outline: 2px solid #1B4F91; outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     input, select, textarea, button { font: inherit; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-paper text-ink antialiased">
   <div id="root"></div>
   <script type="text/babel">
     const { useEffect, useRef, useState } = React;
@@ -60,276 +63,82 @@
 
     const copy = {
       exyu: {
-        brand: 'BalkanCZ Asistent',
-        brandSub: 'Pomoć u Češkoj · Asistenta.ro',
-        topBar: 'Besplatno prvo objašnjenje · bez obveze',
-        nav: {
-          problems: 'Situacije',
-          experts: 'Stručnjaci',
-          assistant: 'AI asistent',
-          access: 'Prijava / Oglasi',
-          accessTitle: 'Prijava / Oglasi',
-          accessText: 'Ovo je demo ulaz za buduću zajednicu stručnjaka i oglasa.',
-          login: 'Prijava stručnjaka',
-          post: 'Objavi oglas',
-          close: 'Zatvori'
-        },
+        brand: 'BalkanCZ',
+        nav: { report: 'Prijavi problem' },
         hero: {
-          eyebrow: 'Jednostavno razumijevanje. Stvarna ljudska pomoć.',
-          title: 'Birokracija u Češkoj bez stresa.',
-          description: 'Ne razumiješ pismo, imaš problem s osiguranjem, vizom ili gazdom? Pomoći ćemo ti na tvom jeziku.',
-          tags: ['Ex-Yu i Română', 'Bez skrivenih troškova', 'Prvi korak besplatan'],
-          uploadEyebrow: 'Hitni put',
-          uploadTitle: 'Hitno je? Pošalji pismo na besplatnu procjenu.',
-          uploadText: 'Slikaj dokument mobitelom. Naš tim prvo provjerava što piše i koji je sljedeći korak.',
-          uploadButton: 'Slikaj i pošalji',
-          dropHint: 'Povuci pismo ovdje ili otvori obrazac',
-          fileNote: 'PDF, JPG ili PNG · maksimalno 3 MB',
-          chatEyebrow: 'Jednostavno pitanje',
-          chatTitle: 'Pitaj našeg digitalnog asistenta.',
-          chatText: 'Za osnovna pitanja odgovara odmah. Ako je slučaj složen, povezuje te sa stvarnim stručnjakom.',
-          chatPlaceholder: 'Npr. Koliko dana imam za prijavu VZP-a?',
-          chatButton: 'Pitaj asistenta',
-          reassurance: 'Ne moraš znati naziv institucije. Kreni od onoga što ti se dogodilo.'
+          headline: 'Birokracija u Češkoj bez stresa.',
+          sub: 'Ne razumiješ pismo, imaš problem s osiguranjem, vizom ili gazdom? Saznaj svoja prava ili nam pošalji dokument na besplatnu procjenu.',
+          fastTrackLabel: 'Hitno je?', fastTrackText: 'Pošalji pismo na besplatnu procjenu.', fastTrackButton: 'Slikaj i pošalji',
+          aiLabel: 'Imaš kratko pitanje?', aiText: 'Pitaj digitalnog asistenta.', aiButton: 'Započni chat'
         },
         problems: {
-          eyebrow: 'Problem-first pomoć',
-          title: 'Što ti se dogodilo?',
-          lead: 'Klikni na svoju situaciju. Dobit ćeš kratko objašnjenje i vidjeti tko ti može pomoći.',
-          open: 'Prikaži pravila i stručnjake',
-          close: 'Sakrij informacije',
-          quickInfo: 'Brza informacija',
-          experts: 'Stručnjaci za ovu situaciju',
-          needHelp: 'Trebaš pomoć?',
-          action: 'Besplatna procjena slučaja',
-          note: 'Informativno: točan rok i postupak uvijek provjeri prema svom dokumentu.'
+          title: 'Što ti se dogodilo?', cta: 'Ne nalaziš svoj problem? Zatraži besplatnu analizu.', quickInfo: 'Brza informacija', experts: 'Stručnjaci za ovu situaciju',
+          action: 'Besplatna procjena slučaja', close: 'Sakrij informacije', note: 'Informativno: točan rok i postupak uvijek provjeri prema svom dokumentu.'
         },
-        directory: {
-          eyebrow: 'Provjereni ljudi za teške slučajeve',
-          title: 'Tvoj problem rješavaju stvarni ljudi',
-          lead: 'Kad jednostavno objašnjenje nije dovoljno, možeš poslati upit stručnjaku koji razumije jezik i život u Češkoj.',
-          verified: 'Verificirani stručnjak',
-          ask: 'Pošalji upit'
+        experts: { title: 'Tvoj problem rješavaju stvarni ljudi', badge: 'Verificirani stručnjak', button: 'Pošalji upit' },
+        chat: {
+          title: 'Digitalni Znalac', status: 'Odgovara odmah', userMsg: 'Treba li mi sudski prevoditelj za OAMP?',
+          aiMsg: 'Za osnovne prijave sudski prevoditelj nije potreban u svakoj situaciji, ali sve ovisi o dokumentu i uputama OAMP-a. Ako službeno pismo traži ovjereni prijevod ili dopunu, stručnjaci ga mogu besplatno pregledati.',
+          aiButton: 'Pošalji pismo stručnjaku', inputPlaceholder: 'Napiši pitanje…', send: 'Pošalji', close: 'Zatvori asistenta',
+          thinking: 'Provjeravam pitanje…', demoLabel: 'Demo odgovor', liveLabel: 'AI odgovor', disclaimer: 'AI daje opće informacije, ne pravni savjet.'
         },
         form: {
-          title: 'Besplatna procjena tvog slučaja',
-          subtitle: 'Pošalji osnovne podatke i dokument. Stručnjak će ti se javiti s jasnim sljedećim korakom.',
-          selectedExpert: 'Upit za stručnjaka',
-          name: 'Ime i prezime',
-          nameHint: 'opcionalno',
-          phone: 'Kontakt / WhatsApp broj',
-          phoneHint: 'važno za brzi odgovor',
-          email: 'E-mail za potvrdu',
-          problem: 'Tema',
-          chooseProblem: 'Odaberi temu',
-          unsure: 'Nisam siguran / drugo',
-          description: 'Kratak opis',
-          descriptionPlaceholder: 'Što se dogodilo? Napiši ukratko…',
-          document: 'Dokument ili fotografija pisma',
-          camera: 'Slikaj ili odaberi dokument',
-          changeFile: 'Promijeni dokument',
-          fileHint: 'Na mobitelu možeš odmah otvoriti kameru.',
-          consent: 'Slažem se da me kontaktirate u vezi rješavanja ovog upita.',
-          submit: 'Zatraži ponudu stručnjaka',
-          sending: 'Šaljemo upit…',
-          security: 'Dokument pregledava samo naš tim. Nemoj slati više osobnih podataka nego što je potrebno.',
-          disclaimer: 'Nema skrivenih troškova. Javljamo točnu, fiksnu cijenu rješenja prije nego išta platiš.',
-          close: 'Zatvori',
-          missingFile: 'Prvo dodaj sliku ili PDF dokument.',
-          missingBasics: 'Unesi e-mail i WhatsApp broj, prihvati kontakt i dodaj dokument.',
-          invalidFile: 'Molimo odaberi PDF, JPG ili PNG dokument.',
-          tooLarge: 'Dokument je prevelik. Maksimalna veličina je 3 MB.',
-          success: 'Upit je zaprimljen. Poslali smo potvrdu na tvoj e-mail.',
-          error: 'Trenutno nije moguće poslati upit. Pokušaj ponovno.'
+          title: 'Besplatna procjena tvog slučaja', name: 'Ime i prezime', email: 'E-mail za potvrdu', contact: 'Kontakt (WhatsApp broj)', contactHint: 'važno za brzi odgovor',
+          problemType: 'Vrsta problema', problemPlaceholder: 'Odaberi vrstu problema', description: 'Kratak opis', descriptionPlaceholder: 'Što se dogodilo? Napiši ukratko…',
+          upload: 'Upload dokumenta', uploadHint: 'Povuci datoteku ovdje ili klikni za odabir', chooseFile: 'Odaberi sliku ili PDF', changeFile: 'Promijeni dokument',
+          consent: 'Slažem se da me kontaktirate u vezi rješavanja ovog upita.', submit: 'Zatraži ponudu stručnjaka', sending: 'Šaljemo upit…',
+          trust: 'Nema skrivenih troškova. Dobivaš fiksnu cijenu rješenja prije nego išta platiš.', security: 'Dokument pregledava samo naš tim.', close: 'Zatvori',
+          missingFile: 'Prvo dodaj sliku ili PDF dokument.', missingBasics: 'Unesi e-mail i WhatsApp broj te prihvati kontakt.', invalidFile: 'Odaberi PDF, JPG ili PNG dokument.',
+          tooLarge: 'Dokument je prevelik. Maksimalna veličina je 3 MB.', success: 'Upit je zaprimljen. Poslali smo potvrdu na tvoj e-mail.', error: 'Trenutno nije moguće poslati upit. Pokušaj ponovno.'
         },
-        chat: {
-          title: 'Digitalni Znalac',
-          status: 'Odgovara odmah',
-          heroQuestion: 'Imaš jednostavno pitanje? Pitaj našeg digitalnog asistenta.',
-          mockUser: 'Treba li mi sudski prevoditelj za prijavu na OAMP?',
-          answer: 'Za osnovne prijave sudski prevoditelj nije potreban u svakoj situaciji, ali sve ovisi o dokumentu i uputama OAMP-a. Ako službeno pismo traži ovjereni prijevod ili dopunu, naši stručnjaci ga mogu besplatno pregledati.',
-          sendToExpert: 'Pošalji pismo stručnjaku',
-          inputPlaceholder: 'Napiši svoje pitanje…',
-          send: 'Pošalji',
-          close: 'Zatvori asistenta',
-          thinking: 'Provjeravam pitanje…',
-          demoLabel: 'Demo odgovor',
-          liveLabel: 'AI odgovor',
-          disclaimer: 'AI daje opće informacije, ne pravni savjet.'
-        },
-        footer: {
-          title: 'Jedan problem. Jedan jasan sljedeći korak.',
-          disclaimer: 'Pravna napomena: Pružamo administrativne, prevoditeljske i asistentske usluge u sklopu slobodnog obrta (živnost volná). Nismo ovlašteni odvjetnički ured niti porezni savjetnici. Informacije su opće i ne zamjenjuju individualni pravni ili porezni savjet.',
-          demo: 'Demo verzija · 2026'
-        }
+        footer: { legal: 'Pravna napomena: Pružamo administrativne, prevoditeljske i asistentske usluge u sklopu slobodnog obrta (živnost volná). Nismo ovlašteni odvjetnički ured niti porezni savjetnici. Informacije su opće i ne zamjenjuju individualni pravni ili porezni savjet.' }
       },
       ro: {
-        brand: 'BalkanCZ Asistent',
-        brandSub: 'Ajutor în Cehia · Asistenta.ro',
-        topBar: 'Prima explicație este gratuită · fără obligații',
-        nav: {
-          problems: 'Situații',
-          experts: 'Specialiști',
-          assistant: 'Asistent AI',
-          access: 'Autentificare / Anunțuri',
-          accessTitle: 'Autentificare / Anunțuri',
-          accessText: 'Acesta este accesul demo pentru viitoarea comunitate de specialiști și anunțuri.',
-          login: 'Autentificare specialist',
-          post: 'Publică un anunț',
-          close: 'Închide'
-        },
+        brand: 'Asistenta.ro',
+        nav: { report: 'Raportează o problemă' },
         hero: {
-          eyebrow: 'Înțelegere simplă. Ajutor real de la oameni.',
-          title: 'Birocrația din Cehia fără stres.',
-          description: 'Nu înțelegi o scrisoare, ai probleme cu asigurarea, viza sau proprietarul? Te ajutăm în limba ta.',
-          tags: ['Ex-Yu și Română', 'Fără costuri ascunse', 'Primul pas gratuit'],
-          uploadEyebrow: 'Calea rapidă',
-          uploadTitle: 'Este urgent? Trimite scrisoarea pentru o evaluare gratuită.',
-          uploadText: 'Fotografiază documentul cu telefonul. Echipa noastră verifică mai întâi ce scrie și care este următorul pas.',
-          uploadButton: 'Fotografiază și trimite',
-          dropHint: 'Trage scrisoarea aici sau deschide formularul',
-          fileNote: 'PDF, JPG sau PNG · maximum 3 MB',
-          chatEyebrow: 'Întrebare simplă',
-          chatTitle: 'Întreabă asistentul nostru digital.',
-          chatText: 'Răspunde imediat la întrebări de bază. Dacă situația este complexă, te conectează cu un specialist real.',
-          chatPlaceholder: 'Ex.: În câte zile trebuie să anunț VZP?',
-          chatButton: 'Întreabă asistentul',
-          reassurance: 'Nu trebuie să știi numele instituției. Începe cu ce ți s-a întâmplat.'
+          headline: 'Birocrația din Cehia fără stres.',
+          sub: 'Nu înțelegi o scrisoare, ai probleme cu asigurarea, viza sau proprietarul? Află-ți drepturile sau trimite-ne documentul pentru o evaluare gratuită.',
+          fastTrackLabel: 'Este urgent?', fastTrackText: 'Trimite scrisoarea pentru evaluare gratuită.', fastTrackButton: 'Fotografiază și trimite',
+          aiLabel: 'Ai o întrebare scurtă?', aiText: 'Întreabă asistentul digital.', aiButton: 'Pornește chat-ul'
         },
         problems: {
-          eyebrow: 'Ajutor pornind de la problemă',
-          title: 'Ce ți s-a întâmplat?',
-          lead: 'Apasă pe situația ta. Vei vedea o explicație scurtă și cine te poate ajuta.',
-          open: 'Arată regulile și specialiștii',
-          close: 'Ascunde informațiile',
-          quickInfo: 'Informație rapidă',
-          experts: 'Specialiști pentru această situație',
-          needHelp: 'Ai nevoie de ajutor?',
-          action: 'Evaluare gratuită a cazului',
-          note: 'Informativ: termenul și procedura exactă trebuie verificate în documentul tău.'
+          title: 'Ce ți s-a întâmplat?', cta: 'Nu găsești problema ta? Cere o analiză gratuită.', quickInfo: 'Informație rapidă', experts: 'Specialiști pentru această situație',
+          action: 'Evaluare gratuită a cazului', close: 'Ascunde informațiile', note: 'Informativ: termenul și procedura exactă trebuie verificate în documentul tău.'
         },
-        directory: {
-          eyebrow: 'Oameni verificați pentru cazurile dificile',
-          title: 'Problema ta este rezolvată de oameni reali',
-          lead: 'Când explicația simplă nu este suficientă, trimiți o întrebare unui specialist care înțelege limba și viața în Cehia.',
-          verified: 'Specialist verificat',
-          ask: 'Trimite o întrebare'
+        experts: { title: 'Problema ta este rezolvată de oameni reali', badge: 'Specialist verificat', button: 'Trimite o întrebare' },
+        chat: {
+          title: 'Expertul Digital', status: 'Răspunde imediat', userMsg: 'Am nevoie de traducător autorizat pentru OAMP?',
+          aiMsg: 'Pentru cererile OAMP, traducerea autorizată nu este necesară în fiecare situație. Depinde de document și de instrucțiunile primite; dacă scrisoarea cere traducere oficială sau completări, un specialist o poate verifica înainte să răspunzi.',
+          aiButton: 'Trimite scrisoarea specialistului', inputPlaceholder: 'Scrie o întrebare…', send: 'Trimite', close: 'Închide asistentul',
+          thinking: 'Verific întrebarea…', demoLabel: 'Răspuns demo', liveLabel: 'Răspuns AI', disclaimer: 'AI oferă informații generale, nu consultanță juridică.'
         },
         form: {
-          title: 'Evaluarea gratuită a cazului tău',
-          subtitle: 'Trimite datele de bază și documentul. Specialistul îți va răspunde cu următorul pas clar.',
-          selectedExpert: 'Întrebare pentru specialist',
-          name: 'Nume și prenume',
-          nameHint: 'opțional',
-          phone: 'Contact / număr WhatsApp',
-          phoneHint: 'important pentru un răspuns rapid',
-          email: 'E-mail pentru confirmare',
-          problem: 'Subiect',
-          chooseProblem: 'Alege tema',
-          unsure: 'Nu sunt sigur / altceva',
-          description: 'Descriere scurtă',
-          descriptionPlaceholder: 'Ce s-a întâmplat? Scrie pe scurt…',
-          document: 'Document sau fotografie a scrisorii',
-          camera: 'Fă o fotografie sau alege documentul',
-          changeFile: 'Schimbă documentul',
-          fileHint: 'Pe telefon poți deschide direct camera.',
-          consent: 'Sunt de acord să fiu contactat în legătură cu această solicitare.',
-          submit: 'Cere oferta specialistului',
-          sending: 'Trimitem întrebarea…',
-          security: 'Documentul este verificat doar de echipa noastră. Nu trimite mai multe date personale decât este necesar.',
-          disclaimer: 'Fără costuri ascunse. Îți comunicăm prețul fix al soluției înainte să plătești ceva.',
-          close: 'Închide',
-          missingFile: 'Adaugă mai întâi o fotografie sau un PDF.',
-          missingBasics: 'Introdu e-mailul și numărul WhatsApp, acceptă contactul și adaugă documentul.',
-          invalidFile: 'Alege un document PDF, JPG sau PNG.',
-          tooLarge: 'Documentul este prea mare. Dimensiunea maximă este de 3 MB.',
-          success: 'Întrebarea a fost primită. Am trimis confirmarea pe e-mail.',
-          error: 'Momentan nu putem trimite întrebarea. Încearcă din nou.'
+          title: 'Evaluare gratuită a cazului tău', name: 'Nume și prenume', email: 'E-mail pentru confirmare', contact: 'Contact (număr WhatsApp)', contactHint: 'important pentru răspuns rapid',
+          problemType: 'Tipul problemei', problemPlaceholder: 'Alege tipul problemei', description: 'Descriere scurtă', descriptionPlaceholder: 'Ce s-a întâmplat? Scrie pe scurt…',
+          upload: 'Încarcă documentul', uploadHint: 'Trage fișierul aici sau apasă pentru a-l selecta', chooseFile: 'Alege o imagine sau un PDF', changeFile: 'Schimbă documentul',
+          consent: 'Sunt de acord să fiu contactat în legătură cu această solicitare.', submit: 'Cere oferta specialistului', sending: 'Trimitem întrebarea…',
+          trust: 'Fără costuri ascunse. Primești prețul fix al soluției înainte să plătești ceva.', security: 'Documentul este verificat doar de echipa noastră.', close: 'Închide',
+          missingFile: 'Adaugă mai întâi o fotografie sau un PDF.', missingBasics: 'Introdu e-mailul și numărul WhatsApp și acceptă contactul.', invalidFile: 'Alege un document PDF, JPG sau PNG.',
+          tooLarge: 'Documentul este prea mare. Dimensiunea maximă este de 3 MB.', success: 'Întrebarea a fost primită. Am trimis confirmarea pe e-mail.', error: 'Momentan nu putem trimite întrebarea. Încearcă din nou.'
         },
-        chat: {
-          title: 'Cunoscătorul digital',
-          status: 'Răspunde imediat',
-          heroQuestion: 'Ai o întrebare simplă? Întreabă asistentul nostru digital.',
-          mockUser: 'Am nevoie de traducător autorizat pentru cererea la OAMP?',
-          answer: 'Pentru cererile de bază nu este necesar un traducător autorizat în fiecare situație, dar totul depinde de document și de instrucțiunile OAMP. Dacă scrisoarea oficială cere o traducere autorizată sau completări, specialiștii noștri o pot verifica gratuit.',
-          sendToExpert: 'Trimite scrisoarea specialistului',
-          inputPlaceholder: 'Scrie întrebarea ta…',
-          send: 'Trimite',
-          close: 'Închide asistentul',
-          thinking: 'Verific întrebarea…',
-          demoLabel: 'Răspuns demo',
-          liveLabel: 'Răspuns AI',
-          disclaimer: 'AI oferă informații generale, nu consultanță juridică.'
-        },
-        footer: {
-          title: 'O problemă. Un următor pas clar.',
-          disclaimer: 'Notă legală: Oferim asistență administrativă, de traducere și asistență în cadrul unei activități independente (živnost volná). Nu suntem cabinet de avocatură și nu suntem consultanți fiscali. Informațiile sunt generale și nu înlocuiesc consultanța juridică sau fiscală individuală.',
-          demo: 'Versiune demo · 2026'
-        }
+        footer: { legal: 'Notă legală: Oferim asistență administrativă, de traducere și asistență în cadrul unei activități independente (živnost volná). Nu suntem cabinet de avocatură și nu suntem consultanți fiscali. Informațiile sunt generale și nu înlocuiesc consultanța juridică sau fiscală individuală.' }
       }
     };
 
-    const experts = [
-      {
-        id: 'jelena',
-        name: 'Jelena M.',
-        avatar: 'https://i.pravatar.cc/96?img=47',
-        initials: 'JM',
-        tone: 'bg-rose-100 text-rose-700',
-        exyu: { badge: 'Verificirani prevoditelj', specialization: 'Vize, VZP, OAMP', bio: 'Pomaže ljudima razumjeti službena pisma i pripremiti dokumente.' },
-        ro: { badge: 'Traducător verificat', specialization: 'Vize, VZP, OAMP', bio: 'Ajută oamenii să înțeleagă scrisorile oficiale și să pregătească documentele.' }
-      },
-      {
-        id: 'marko',
-        name: 'Marko P.',
-        avatar: 'https://i.pravatar.cc/96?img=12',
-        initials: 'MP',
-        tone: 'bg-blue-100 text-trust-700',
-        exyu: { badge: 'Administrativna podrška', specialization: 'OSVČ, Bolt, stanovanje', bio: 'Pomaže vozačima, OSVČ osobama i najmoprimcima u svakodnevnoj administraciji.' },
-        ro: { badge: 'Asistență administrativă', specialization: 'OSVČ, Bolt, chirii', bio: 'Ajută șoferii, persoanele OSVČ și chiriașii cu administrația de zi cu zi.' }
-      },
-      {
-        id: 'nikola',
-        name: 'Nikola R.',
-        avatar: 'https://i.pravatar.cc/96?img=68',
-        initials: 'NR',
-        tone: 'bg-emerald-100 text-safe-700',
-        exyu: { badge: 'Stručnjak za radne dopise', specialization: 'Posao, agencije, plaće', bio: 'Pomaže provjeriti ugovore, platne liste i komunikaciju s agencijama.' },
-        ro: { badge: 'Specialist în documente de muncă', specialization: 'Muncă, agenții, salarii', bio: 'Ajută la verificarea contractelor, fluturașilor și comunicării cu agențiile.' }
-      }
+    const problems = [
+      { id: 'office', icon: 'MailWarning', accent: '#1B4F91', exyu: { title: 'Pismo od úřada / Datová schránka', desc: 'Ne razumiješ šta piše, rok ističe', tag: 'Rokovi', info: 'Službeno pismo može sadržavati važan rok. Točan početak i duljina roka ovise o dokumentu i načinu dostave.', action: 'Pošalji nam pismo da provjerimo što trebaš napraviti.', expertIds: ['jelena'] }, ro: { title: 'Scrisoare de la úřad / Cutie de date', desc: 'Nu înțelegi ce scrie, termenul expiră', tag: 'Termene', info: 'O scrisoare oficială poate conține un termen important. Data exactă și procedura depind de document și de modul comunicării.', action: 'Trimite-ne scrisoarea pentru a verifica următorul pas.', expertIds: ['jelena'] } },
+      { id: 'housing', icon: 'KeyRound', accent: '#3D7DD8', exyu: { title: 'Stanodavac i kaucija', desc: 'Ugovor, otkaz, povrat depozita', tag: 'Najam', info: 'Kod kaucije i obračuna režija važno je sačuvati ugovor, primopredajni zapisnik i račune. Stručnjak može pomoći sastaviti jasan dopis.', action: 'Imaš problem sa stanom? Pošalji upit stručnjaku.', expertIds: ['amira'] }, ro: { title: 'Proprietar și garanție', desc: 'Contract, reziliere, returnare depozit', tag: 'Chirie', info: 'Pentru garanție și utilități sunt importante contractul, procesul-verbal și facturile. Un specialist te poate ajuta cu o solicitare clară.', action: 'Ai o problemă cu locuința? Trimite o întrebare.', expertIds: ['amira'] } },
+      { id: 'health', icon: 'Activity', accent: '#E2811E', exyu: { title: 'Zdravstveno (VZP) i dugovi', desc: 'Osiguranje, neplaćeni računi', tag: 'Zdravlje', info: 'Obveze ovise o promjeni posla, ugovora i statusa osiguranja. Kod dopisa VZP-a najprije treba provjeriti točan dokument i rok.', action: 'Pošalji dopis ili opiši situaciju za besplatnu provjeru.', expertIds: ['jelena'] }, ro: { title: 'Asigurare (VZP) și datorii', desc: 'Asigurare, facturi neplătite', tag: 'Sănătate', info: 'Obligațiile depind de schimbarea locului de muncă, contractului și statutului de asigurare. Verifică documentul și termenul exact.', action: 'Trimite scrisoarea sau descrie situația pentru o verificare gratuită.', expertIds: ['jelena'] } },
+      { id: 'work', icon: 'Briefcase', accent: '#1B4F91', exyu: { title: 'Posao i neisplaćena plaća', desc: 'Ugovor o radu, kašnjenje isplate', tag: 'Posao', info: 'Sačuvaj ugovor, platne liste i komunikaciju s poslodavcem ili agencijom. To pomaže pri provjeri neisplaćene plaće.', action: 'Pošalji ugovor ili platnu listu na pregled.', expertIds: ['drasko'] }, ro: { title: 'Loc de muncă și salariu neplătit', desc: 'Contract, întârziere plată', tag: 'Muncă', info: 'Păstrează contractul, fluturașii și comunicarea cu angajatorul sau agenția. Acestea ajută la verificarea problemei.', action: 'Trimite contractul sau fluturașul pentru o verificare.', expertIds: ['drasko'] } },
+      { id: 'baby', icon: 'Baby', accent: '#3D7DD8', exyu: { title: 'Rođenje djeteta i OAMP', desc: 'Prijava, dokumenti, dozvola boravka', tag: 'Obitelj', info: 'Kod rođenja djeteta postupak ovisi o statusu roditelja i dokumentima koje traži nadležna institucija. Ne šalji rok napamet bez pregleda dopisa.', action: 'Pošalji dopis ili popis dokumenata stručnjaku.', expertIds: ['jelena'] }, ro: { title: 'Nașterea copilului și OAMP', desc: 'Înregistrare, acte, permis de ședere', tag: 'Familie', info: 'Procedura depinde de statutul părinților și de documentele cerute de instituție. Nu presupune termenul fără verificarea scrisorii.', action: 'Trimite scrisoarea sau lista actelor unui specialist.', expertIds: ['jelena'] } },
+      { id: 'osvc', icon: 'Car', accent: '#E2811E', exyu: { title: 'OSVČ (Paušal i Bolt)', desc: 'Obrt, paušalni porez, prijave', tag: 'Porezi', info: 'Za OSVČ je važno pratiti datovou schránku, zálohy i porezne rokove. Kod konkretnog dopisa prvo treba utvrditi instituciju i obvezu.', action: 'Pošalji dopis ili pitanje za administrativnu podršku.', expertIds: ['amira'] }, ro: { title: 'OSVČ (impozit forfetar și Bolt)', desc: 'Autorizație, impozit forfetar, declarații', tag: 'Taxe', info: 'Pentru OSVČ este important să urmărești datová schránka, avansurile și termenele fiscale. Verifică mai întâi instituția și obligația exactă.', action: 'Trimite scrisoarea sau întrebarea pentru ajutor administrativ.', expertIds: ['amira'] } }
     ];
 
-    const problems = [
-      {
-        id: 'letter', icon: 'MailWarning', tone: 'amber', expertIds: ['jelena', 'nikola'],
-        exyu: { title: 'Pismo od úřada / Datová schránka', tag: 'Rokovi', info: 'Kod datové schránke se pod određenim uvjetima poruka smatra dostavljenom nakon 10 dana. Rok za žalbu nije uvijek isti, zato treba provjeriti baš tvoje pismo.', action: 'Pošalji pismo da vidimo što traži úřad.' },
-        ro: { title: 'Scrisoare de la úřad / Datová schránka', tag: 'Termene', info: 'În anumite condiții, un mesaj din datová schránka este considerat livrat după 10 zile. Termenul pentru contestație nu este mereu același, de aceea trebuie verificată scrisoarea ta.', action: 'Trimite scrisoarea ca să vedem ce cere úřad.' }
-      },
-      {
-        id: 'deposit', icon: 'KeyRound', tone: 'rose', expertIds: ['marko'],
-        exyu: { title: 'Stanodavac i kaucija', tag: 'Najam', info: 'Kod povrata kaucije i obračuna režija važno je pogledati ugovor i pisani obračun (vyúčtování). Traži objašnjenje stvarnih troškova i čuvaj komunikaciju.', action: 'Gazda ne vraća novac? Pomoći ćemo sastaviti službeni dopis.' },
-        ro: { title: 'Proprietar și garanție', tag: 'Chirie', info: 'Pentru restituirea garanției și decontul utilităților trebuie verificate contractul și documentul vyúčtování. Cere explicații pentru costurile reale și păstrează comunicarea în scris.', action: 'Proprietarul nu restituie banii? Te ajutăm cu o scrisoare oficială.' }
-      },
-      {
-        id: 'health', icon: 'HeartPulse', tone: 'red', expertIds: ['jelena'],
-        exyu: { title: 'Zdravstveno (VZP) i dugovi', tag: 'Zdravlje', info: 'Nakon promjene posla ili statusa često treba provjeriti osiguranje u kratkom roku, ponekad 8 dana. Točan rok ovisi o tvojoj situaciji — provjeri VZP prije nego nastane dug.', action: 'Trebate pomoć? Besplatno provjerimo tvoj status.' },
-        ro: { title: 'Asigurare medicală (VZP) și datorii', tag: 'Sănătate', info: 'După schimbarea locului de muncă sau a statutului trebuie verificată asigurarea într-un termen scurt, uneori 8 zile. Termenul exact depinde de situație — verifică VZP înainte să apară datorii.', action: 'Ai nevoie de ajutor? Verificăm gratuit statutul tău.' }
-      },
-      {
-        id: 'work', icon: 'BriefcaseBusiness', tone: 'blue', expertIds: ['nikola'],
-        exyu: { title: 'Posao i neisplaćena plaća', tag: 'Posao', info: 'Traži platnu listu (výplatní páska) i provjeri svaku stavku. Odbici trebaju imati jasan osnov. Sačuvaj ugovor, raspored i poruke.', action: 'Provjerimo ugovor, platnu listu i sljedeći korak.' },
-        ro: { title: 'Muncă și salariu neplătit', tag: 'Muncă', info: 'Cere fluturașul de salariu (výplatní páska) și verifică fiecare poziție. Reținerile trebuie să aibă o bază clară. Păstrează contractul și mesajele.', action: 'Verificăm contractul, fluturașul și următorul pas.' }
-      },
-      {
-        id: 'family', icon: 'Baby', tone: 'violet', expertIds: ['jelena'],
-        exyu: { title: 'Rođenje djeteta i OAMP', tag: 'Obitelj', info: 'Obaveze za osiguranje, boravak i dokumente ovise o statusu roditelja i djeteta. Često se spominju rokovi od 8 i 60 dana, ali ih treba potvrditi za tvoju situaciju.', action: 'Dobij vodič ili pošalji dokument stručnjaku.' },
-        ro: { title: 'Nașterea copilului și OAMP', tag: 'Familie', info: 'Obligațiile pentru asigurare, ședere și documente depind de statutul părinților și al copilului. Sunt menționate frecvent termene de 8 și 60 de zile, dar trebuie confirmate pentru situația ta.', action: 'Primește un ghid sau trimite documentul specialistului.' }
-      },
-      {
-        id: 'osvc', icon: 'CarFront', tone: 'emerald', expertIds: ['marko', 'nikola'],
-        exyu: { title: 'OSVČ (Paušal i Bolt)', tag: 'Porezi', info: 'Za vozače je važno voditi evidenciju, pratiti zálohy i čitati poruke u datovoj schránki. Obaveze ovise o djelatnosti i poreznom režimu.', action: 'Trebaš čiste papire bez stresa? Zatraži administrativnu podršku.' },
-        ro: { title: 'OSVČ (Paușal și Bolt)', tag: 'Taxe', info: 'Pentru șoferi este importantă evidența, urmărirea záloh și citirea mesajelor din datová schránka. Obligațiile depind de activitate și regimul fiscal.', action: 'Vrei documente în ordine fără stres? Cere suport administrativ.' }
-      }
+    const experts = [
+      { id: 'jelena', name: 'Jelena M.', initials: 'JM', bg: '#EAF1FB', color: '#1B4F91', exyu: { spec: 'Vize, VZP, OAMP', bio: 'Pomaže ljudima razumjeti službena pisma i pripremiti dokumente.' }, ro: { spec: 'Vize, VZP, OAMP', bio: 'Ajută oamenii să înțeleagă scrisorile oficiale și să pregătească documentele.' } },
+      { id: 'drasko', name: 'Draško P.', initials: 'DP', bg: '#EFF5FD', color: '#3D7DD8', exyu: { spec: 'Radno pravo, plaće', bio: 'Pomaže provjeriti ugovore, platne liste i komunikaciju s agencijama.' }, ro: { spec: 'Dreptul muncii, salarii', bio: 'Ajută la verificarea contractelor, fluturașilor și comunicării cu agențiile.' } },
+      { id: 'amira', name: 'Amira S.', initials: 'AS', bg: '#FCF0E1', color: '#B8650F', exyu: { spec: 'Stanovanje, kaucije, OSVČ', bio: 'Pomaže najmoprimcima, vozačima i OSVČ osobama s administracijom.' }, ro: { spec: 'Locuință, garanții, OSVČ', bio: 'Ajută chiriașii, șoferii și persoanele OSVČ cu administrația de zi cu zi.' } }
     ];
 
     function Icon({ name, className = 'h-5 w-5' }) {
@@ -345,252 +154,93 @@
 
     function Modal({ titleId, onClose, children }) {
       useEffect(() => {
-        const onKeyDown = event => event.key === 'Escape' && onClose();
-        document.addEventListener('keydown', onKeyDown);
-        return () => document.removeEventListener('keydown', onKeyDown);
+        const onKey = event => event.key === 'Escape' && onClose();
+        document.addEventListener('keydown', onKey);
+        return () => document.removeEventListener('keydown', onKey);
       }, [onClose]);
-      return (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-slate-950/50 p-0 backdrop-blur-sm sm:items-center sm:p-4" onMouseDown={event => event.target === event.currentTarget && onClose()}>
-          <div role="dialog" aria-modal="true" aria-labelledby={titleId} className="max-h-[94vh] w-full overflow-y-auto rounded-t-3xl bg-white shadow-2xl sm:max-w-2xl sm:rounded-3xl">{children}</div>
-        </div>
-      );
+      return <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/50 p-0 backdrop-blur-sm sm:items-center sm:p-4" onMouseDown={event => event.target === event.currentTarget && onClose()}><div role="dialog" aria-modal="true" aria-labelledby={titleId} className="max-h-[92vh] w-full overflow-y-auto rounded-t-card bg-white shadow-trust sm:max-w-xl sm:rounded-card">{children}</div></div>;
     }
 
     function App() {
       const [lang, setLang] = useState('exyu');
       const c = copy[lang];
-      const [intakeOpen, setIntakeOpen] = useState(false);
-      const [accessOpen, setAccessOpen] = useState(false);
+      const [modalOpen, setModalOpen] = useState(false);
       const [chatOpen, setChatOpen] = useState(false);
+      const [expanded, setExpanded] = useState(null);
+      const [file, setFile] = useState(null);
+      const [dragActive, setDragActive] = useState(false);
+      const [submission, setSubmission] = useState({ state: 'idle', message: '' });
+      const [form, setForm] = useState({ name: '', email: '', phone: '', problem: '', description: '', expert: '', consent: false });
       const [chatDraft, setChatDraft] = useState('');
       const [chatQuestion, setChatQuestion] = useState('');
       const [chatAsked, setChatAsked] = useState(false);
       const [chatAnswer, setChatAnswer] = useState('');
       const [chatMode, setChatMode] = useState('demo');
       const [chatState, setChatState] = useState('idle');
-      const [expanded, setExpanded] = useState(null);
-      const [file, setFile] = useState(null);
-      const [drag, setDrag] = useState(false);
-      const [submission, setSubmission] = useState({ state: 'idle', message: '' });
-      const [form, setForm] = useState({ name: '', email: '', phone: '', problem: '', description: '', expert: '', consent: false });
       const input = useRef(null);
 
-      useEffect(() => {
-        document.documentElement.lang = lang === 'ro' ? 'ro' : 'hr';
-      }, [lang]);
-
+      useEffect(() => { document.documentElement.lang = lang === 'ro' ? 'ro' : 'hr'; }, [lang]);
       const updateField = (field, value) => setForm(previous => ({ ...previous, [field]: value }));
-      const changeLanguage = nextLanguage => {
-        setLang(nextLanguage);
-        setChatAsked(false);
-        setChatQuestion('');
-        setChatAnswer('');
-        setChatMode('demo');
-        setChatState('idle');
-      };
-      const currentProblem = problems.find(problem => problem.id === form.problem);
+      const currentProblem = problems.find(item => item.id === form.problem);
       const selectedProblemTitle = currentProblem?.[lang]?.title || (lang === 'ro' ? 'Altă situație' : 'Druga situacija');
-      const selectedExpert = experts.find(expert => expert.id === form.expert);
-      const expertById = id => experts.find(expert => expert.id === id);
+      const selectedExpert = experts.find(item => item.id === form.expert);
+      const expertById = id => experts.find(item => item.id === id);
 
-      const openIntake = (problemId = '', expertId = '') => {
+      const openModal = (problemId = '', expertId = '') => {
         setForm(previous => ({ ...previous, problem: problemId || previous.problem, expert: expertId || previous.expert }));
-        setSubmission({ state: 'idle', message: '' });
-        setIntakeOpen(true);
+        setSubmission({ state: 'idle', message: '' }); setChatOpen(false); setModalOpen(true);
       };
-
+      const closeModal = () => { setModalOpen(false); setSubmission({ state: 'idle', message: '' }); };
       const pick = candidateFiles => {
         const next = candidateFiles?.[0];
         if (!next) return;
-        if (!ACCEPTED_TYPES.includes(next.type)) {
-          setSubmission({ state: 'error', message: c.form.invalidFile });
-          return;
-        }
-        if (next.size > MAX_FILE_SIZE) {
-          setSubmission({ state: 'error', message: c.form.tooLarge });
-          return;
-        }
-        setFile(next);
-        setSubmission({ state: 'idle', message: '' });
+        if (!ACCEPTED_TYPES.includes(next.type)) { setSubmission({ state: 'error', message: c.form.invalidFile }); return; }
+        if (next.size > MAX_FILE_SIZE) { setSubmission({ state: 'error', message: c.form.tooLarge }); return; }
+        setFile(next); setSubmission({ state: 'idle', message: '' });
       };
-
-      const toDataUrl = selectedFile => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = () => reject(new Error(c.form.error));
-        reader.readAsDataURL(selectedFile);
-      });
-
+      const toDataUrl = selectedFile => new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = () => reject(new Error(c.form.error)); reader.readAsDataURL(selectedFile); });
       const submitDocument = async event => {
         event.preventDefault();
-        if (!file) {
-          setSubmission({ state: 'error', message: c.form.missingFile });
-          return;
-        }
-        if (!form.email.trim() || !form.phone.trim() || !form.consent) {
-          setSubmission({ state: 'error', message: c.form.missingBasics });
-          return;
-        }
+        if (!file) { setSubmission({ state: 'error', message: c.form.missingFile }); return; }
+        if (!form.email.trim() || !form.phone.trim() || !form.consent) { setSubmission({ state: 'error', message: c.form.missingBasics }); return; }
         setSubmission({ state: 'loading', message: c.form.sending });
         try {
           const dataUrl = await toDataUrl(file);
-          const response = await fetch('/api/submit', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              source: 'balkancz-vercel-demo',
-              language: lang,
-              submitted_at: new Date().toISOString(),
-              client: { name: form.name.trim(), email: form.email.trim(), phone: form.phone.trim() },
-              problem: selectedProblemTitle,
-              problem_id: form.problem || 'other',
-              expert: selectedExpert?.name || '',
-              description: form.description.trim(),
-              consent: form.consent,
-              document: { filename: file.name, mime_type: file.type, size_bytes: file.size, data_url: dataUrl }
-            })
-          });
+          const response = await fetch('/api/submit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source: 'balkancz-vercel-demo', language: lang, communication_language: lang === 'ro' ? 'ro' : 'exyu', submitted_at: new Date().toISOString(), client: { name: form.name.trim(), email: form.email.trim(), phone: form.phone.trim() }, problem: selectedProblemTitle, problem_id: form.problem || 'other', expert: selectedExpert?.name || '', description: form.description.trim(), consent: form.consent, document: { filename: file.name, mime_type: file.type, size_bytes: file.size, data_url: dataUrl } }) });
           const result = await response.json().catch(() => ({}));
           if (!response.ok) throw new Error(result.error || c.form.error);
           setSubmission({ state: 'success', message: c.form.success });
-        } catch (error) {
-          setSubmission({ state: 'error', message: lang === 'exyu' ? (error.message || c.form.error) : c.form.error });
-        }
+        } catch (error) { setSubmission({ state: 'error', message: lang === 'exyu' ? (error.message || c.form.error) : c.form.error }); }
       };
-
       const askChat = async question => {
-        const nextQuestion = (question || '').trim() || c.chat.mockUser;
-        setChatQuestion(nextQuestion);
-        setChatAsked(true);
-        setChatOpen(true);
-        setChatAnswer('');
-        setChatMode('demo');
-        setChatState('loading');
+        const nextQuestion = (question || '').trim() || c.chat.userMsg;
+        setChatQuestion(nextQuestion); setChatAsked(true); setChatOpen(true); setChatAnswer(''); setChatMode('demo'); setChatState('loading');
         try {
-          const response = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ question: nextQuestion, language: lang })
-          });
+          const response = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: nextQuestion, language: lang }) });
           const result = await response.json().catch(() => ({}));
           if (!response.ok || !result.answer) throw new Error('Chat unavailable');
-          setChatAnswer(result.answer);
-          setChatMode(result.mode === 'openai' ? 'openai' : 'demo');
-          setChatState('ready');
-        } catch {
-          setChatAnswer(c.chat.answer);
-          setChatMode('demo');
-          setChatState('ready');
-        }
+          setChatAnswer(result.answer); setChatMode(result.mode === 'openai' ? 'openai' : 'demo'); setChatState('ready');
+        } catch { setChatAnswer(c.chat.aiMsg); setChatMode('demo'); setChatState('ready'); }
       };
 
-      const toneClasses = {
-        amber: 'bg-amber-50 text-amber-700 border-amber-200',
-        rose: 'bg-rose-50 text-rose-700 border-rose-200',
-        red: 'bg-red-50 text-red-700 border-red-200',
-        blue: 'bg-trust-50 text-trust-700 border-trust-200',
-        violet: 'bg-violet-50 text-violet-700 border-violet-200',
-        emerald: 'bg-safe-50 text-safe-700 border-emerald-200'
-      };
+      return <div className="min-h-screen bg-paper">
+        <header className="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur"><div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6"><a href="#top" className="flex items-center gap-2" aria-label={c.brand}><div className="flex h-9 w-9 items-center justify-center rounded-item bg-trust text-white"><Icon name="ShieldCheck" className="h-5 w-5" /></div><span className="font-display text-lg font-extrabold tracking-tight text-ink">{c.brand}</span></a><div className="flex items-center gap-2 sm:gap-3"><div className="flex items-center rounded-item border border-line bg-white p-0.5 text-sm" role="group" aria-label="Language switcher"><button type="button" onClick={() => setLang('exyu')} aria-pressed={lang === 'exyu'} className={cx('rounded-[7px] px-2.5 py-1.5 font-medium transition-colors sm:px-3', lang === 'exyu' ? 'bg-trust text-white' : 'text-ink-soft hover:text-ink')}>🇧🇦🇭🇷🇷🇸 <span className="hidden sm:inline">Ex-Yu</span></button><button type="button" onClick={() => setLang('ro')} aria-pressed={lang === 'ro'} className={cx('rounded-[7px] px-2.5 py-1.5 font-medium transition-colors sm:px-3', lang === 'ro' ? 'bg-trust text-white' : 'text-ink-soft hover:text-ink')}>🇷🇴 <span className="hidden sm:inline">Română</span></button></div><button type="button" onClick={() => openModal()} className="hidden rounded-item bg-trust px-4 py-2 text-sm font-semibold text-white shadow-trust-sm transition-transform hover:-translate-y-0.5 sm:block">{c.nav.report}</button><button type="button" onClick={() => openModal()} aria-label={c.nav.report} className="rounded-item bg-trust px-3 py-2 text-sm font-semibold text-white shadow-trust-sm sm:hidden">{c.nav.report}</button></div></div></header>
 
-      return (
-        <div className="min-h-screen bg-slate-50">
-          <div className="bg-trust-900 px-4 py-2 text-center text-xs font-semibold text-white sm:text-sm">{c.topBar}</div>
+        <main id="top">
+          <section className="mx-auto max-w-6xl px-4 pt-10 sm:px-6 sm:pt-16"><div className="max-w-2xl"><h1 className="font-display text-4xl font-extrabold leading-[1.08] tracking-tight text-ink sm:text-5xl">{c.hero.headline}</h1><p className="mt-4 text-base leading-relaxed text-ink-soft sm:text-lg">{c.hero.sub}</p></div><div className="mt-8 grid grid-cols-1 gap-4 sm:mt-10 lg:grid-cols-5"><button type="button" onClick={() => openModal()} className="group relative overflow-hidden rounded-card bg-trust p-6 text-left shadow-trust transition-transform hover:-translate-y-1 sm:p-8 lg:col-span-3"><div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10" aria-hidden="true" /><div className="relative flex items-start justify-between gap-4"><div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-item bg-amber text-white"><Icon name="Camera" className="h-5 w-5" /></div><Icon name="ArrowUpRight" className="h-6 w-6 text-white/70 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></div><p className="relative mt-6 text-sm font-semibold uppercase tracking-wide text-amber-light/90">{c.hero.fastTrackLabel}</p><p className="relative mt-1 font-display text-xl font-bold leading-snug text-white sm:text-2xl">{c.hero.fastTrackText}</p><span className="relative mt-5 inline-flex items-center gap-2 rounded-item bg-white px-4 py-2.5 text-sm font-semibold text-trust">{c.hero.fastTrackButton}<Icon name="ArrowRight" className="h-4 w-4" /></span></button><button type="button" onClick={() => { setChatOpen(true); setModalOpen(false); }} className="group relative overflow-hidden rounded-card border border-line bg-white p-6 text-left shadow-card transition-transform hover:-translate-y-1 sm:p-8 lg:col-span-2"><div className="flex items-start justify-between gap-4"><div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-item bg-sky-light text-sky"><Icon name="MessageCircleMore" className="h-5 w-5" /></div><Icon name="ArrowUpRight" className="h-6 w-6 text-ink-faint transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></div><p className="mt-6 text-sm font-semibold uppercase tracking-wide text-sky">{c.hero.aiLabel}</p><p className="mt-1 font-display text-xl font-bold leading-snug text-ink sm:text-2xl">{c.hero.aiText}</p><span className="mt-5 inline-flex items-center gap-2 rounded-item border border-line px-4 py-2.5 text-sm font-semibold text-trust">{c.hero.aiButton}<Icon name="ArrowRight" className="h-4 w-4" /></span></button></div></section>
 
-          <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/95 backdrop-blur">
-            <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
-              <a href="#top" className="flex min-w-0 items-center gap-2.5" aria-label={c.brand}>
-                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-trust-600 text-lg font-black text-white shadow-sm">B</div>
-                <div className="min-w-0"><div className="truncate font-extrabold tracking-tight text-slate-950">{c.brand}</div><div className="truncate text-[10px] font-medium text-slate-500 sm:text-xs">{c.brandSub}</div></div>
-              </a>
-              <nav className="hidden items-center gap-6 text-sm font-semibold text-slate-600 md:flex" aria-label="Main navigation">
-                <a href="#situacije" className="transition hover:text-trust-600">{c.nav.problems}</a>
-                <a href="#strucnjaci" className="transition hover:text-trust-600">{c.nav.experts}</a>
-                <a href="#asistent" className="transition hover:text-trust-600">{c.nav.assistant}</a>
-              </nav>
-              <div className="flex shrink-0 items-center gap-2">
-                <div className="flex items-center rounded-full border border-slate-200 bg-slate-100 p-1 text-xs font-bold" role="group" aria-label="Language switcher">
-                  <button type="button" onClick={() => changeLanguage('exyu')} aria-pressed={lang === 'exyu'} className={cx('rounded-full px-2.5 py-1.5 transition sm:px-3', lang === 'exyu' ? 'bg-white text-trust-700 shadow-sm' : 'text-slate-500 hover:text-slate-800')}>🇧🇦 🇭🇷 <span className="hidden sm:inline">Ex-Yu</span></button>
-                  <button type="button" onClick={() => changeLanguage('ro')} aria-pressed={lang === 'ro'} className={cx('rounded-full px-2.5 py-1.5 transition sm:px-3', lang === 'ro' ? 'bg-white text-trust-700 shadow-sm' : 'text-slate-500 hover:text-slate-800')}>🇷🇴 <span className="hidden sm:inline">Română</span></button>
-                </div>
-                <button type="button" onClick={() => setAccessOpen(true)} className="hidden items-center gap-2 rounded-xl bg-trust-600 px-3 py-2.5 text-xs font-extrabold text-white transition hover:bg-trust-700 focus:outline-none focus:ring-4 focus:ring-trust-100 sm:inline-flex sm:px-4 sm:text-sm"><Icon name="LogIn" className="h-4 w-4" />{c.nav.access}</button>
-              </div>
-            </div>
-          </header>
+          <section id="situacije" className="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-24"><h2 className="font-display text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">{c.problems.title}</h2><div className="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:grid-cols-2 lg:grid-cols-3">{problems.map(problem => { const item = problem[lang]; const isOpen = expanded === problem.id; const cardExperts = item.expertIds.map(expertById).filter(Boolean); return <article key={problem.id} className={cx('rounded-item border border-line bg-white shadow-card transition-all', isOpen ? 'ring-2 ring-trust/10 sm:col-span-2 lg:col-span-2' : 'hover:border-trust/40 hover:shadow-trust-sm')} style={{ borderLeftWidth: '3px', borderLeftColor: problem.accent }}><button type="button" onClick={() => setExpanded(isOpen ? null : problem.id)} className="group flex w-full items-start gap-3.5 p-4 text-left"><div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px]" style={{ backgroundColor: problem.accent + '14', color: problem.accent }}><Icon name={problem.icon} className="h-[17px] w-[17px]" /></div><div className="min-w-0 flex-1"><p className="text-sm font-semibold leading-snug text-ink">{item.title}</p><p className="mt-0.5 text-xs leading-snug text-ink-faint">{item.desc}</p></div><Icon name={isOpen ? 'ChevronUp' : 'ChevronDown'} className="mt-1 h-4 w-4 shrink-0 text-ink-faint" /></button>{isOpen && <div className="border-t border-line px-4 pb-4 pt-4 sm:ml-16 sm:pl-0"><div className="rounded-item bg-paper p-3.5"><p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-trust"><Icon name="Lightbulb" className="h-4 w-4" />{c.problems.quickInfo}</p><p className="mt-2 text-sm leading-6 text-ink-soft">{item.info}</p></div><p className="mt-3 text-sm font-medium leading-6 text-ink">{item.action}</p><p className="mt-4 text-xs font-semibold uppercase tracking-wide text-ink-faint">{c.problems.experts}</p><div className="mt-2 flex flex-wrap gap-2">{cardExperts.map(expert => <button key={expert.id} type="button" onClick={() => openModal(problem.id, expert.id)} className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3 py-2 text-xs font-semibold text-ink-soft hover:border-trust hover:text-trust"><span className="grid h-6 w-6 place-items-center rounded-full text-[10px] font-bold" style={{ backgroundColor: expert.bg, color: expert.color }}>{expert.initials}</span>{expert.name}<Icon name="BadgeCheck" className="h-3.5 w-3.5 text-trust" /></button>)}</div><div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center"><button type="button" onClick={() => openModal(problem.id)} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-item bg-trust px-4 py-2.5 text-sm font-semibold text-white hover:bg-trust-dark"><Icon name="MessageCircle" className="h-4 w-4" />{c.problems.action}</button><span className="text-xs leading-5 text-ink-faint">{c.problems.note}</span></div></div>}</article>; })}</div><div className="mt-6 flex justify-start"><button type="button" onClick={() => openModal()} className="text-sm font-semibold text-trust underline decoration-trust/30 underline-offset-4 hover:decoration-trust">{c.problems.cta}</button></div></section>
 
-          <main id="top">
-            <section className="relative overflow-hidden border-b border-amber-100 bg-[#fffaf1]">
-              <div className="absolute -right-32 -top-32 h-80 w-80 rounded-full bg-trust-100/70 blur-3xl" />
-              <div className="absolute -bottom-40 -left-20 h-80 w-80 rounded-full bg-amber-100/70 blur-3xl" />
-              <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-                <div className="max-w-3xl"><div className="inline-flex items-center gap-2 rounded-full border border-trust-200 bg-white/80 px-3 py-1.5 text-xs font-extrabold text-trust-700 shadow-sm sm:text-sm"><Icon name="HeartHandshake" className="h-4 w-4" />{c.hero.eyebrow}</div><h1 className="mt-5 text-5xl font-black leading-[1.04] tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">{c.hero.title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">{c.hero.description}</p><div className="mt-7 flex flex-wrap gap-2.5">{c.hero.tags.map(tag => <span key={tag} className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 shadow-sm"><Icon name="Check" className="h-3.5 w-3.5 text-safe-600" />{tag}</span>)}</div><p className="mt-6 flex items-start gap-2 text-sm font-semibold text-slate-600"><Icon name="Info" className="mt-0.5 h-4 w-4 shrink-0 text-trust-600" />{c.hero.reassurance}</p></div>
+          <section id="strucnjaci" className="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-24"><h2 className="font-display text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">{c.experts.title}</h2><div className="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-3">{experts.map(expert => { const item = expert[lang]; return <article key={expert.id} className="flex flex-col rounded-card border border-line bg-white p-5 shadow-card"><div className="flex items-center gap-3"><div className="flex h-12 w-12 items-center justify-center rounded-full font-display text-base font-bold" style={{ backgroundColor: expert.bg, color: expert.color }}>{expert.initials}</div><div><p className="font-display text-base font-bold text-ink">{expert.name}</p><p className="text-xs text-ink-faint">{item.spec}</p></div></div><div className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-sky-light px-2.5 py-1 text-xs font-semibold text-sky"><Icon name="BadgeCheck" className="h-[13px] w-[13px]" />{c.experts.badge}</div><p className="mt-3 text-sm leading-6 text-ink-soft">{item.bio}</p><button type="button" onClick={() => openModal('', expert.id)} className="mt-5 rounded-item border border-line py-2.5 text-sm font-semibold text-trust transition-colors hover:border-trust hover:bg-trust-light">{c.experts.button} {expert.name}</button></article>; })}</div></section>
+        </main>
 
-                <div className="mt-12 grid gap-5 lg:grid-cols-2">
-                  <div className="relative rounded-[2rem] border border-trust-200 bg-white p-5 shadow-lift sm:p-7" onDragOver={event => { event.preventDefault(); setDrag(true); }} onDragLeave={() => setDrag(false)} onDrop={event => { event.preventDefault(); setDrag(false); pick(event.dataTransfer.files); openIntake(); }}>
-                    <div className="flex items-start gap-4"><div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-trust-600 text-white shadow-lg"><Icon name="FileShield" className="h-7 w-7" /></div><div><p className="text-xs font-extrabold uppercase tracking-[.16em] text-trust-600">{c.hero.uploadEyebrow}</p><h2 className="mt-1 text-2xl font-black leading-tight text-slate-950">{c.hero.uploadTitle}</h2></div></div>
-                    <p className="mt-5 leading-7 text-slate-600">{c.hero.uploadText}</p>
-                    <button type="button" onClick={() => openIntake()} className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-trust-600 px-5 py-4 text-center text-base font-extrabold text-white shadow-lg shadow-trust-600/20 transition hover:bg-trust-700 focus:outline-none focus:ring-4 focus:ring-trust-100"><Icon name="Camera" />{c.hero.uploadButton}<Icon name="ArrowRight" className="h-5 w-5" /></button>
-                    <div className={cx('mt-5 rounded-2xl border-2 border-dashed p-5 text-center transition', drag ? 'border-trust-600 bg-trust-50' : 'border-slate-200 bg-slate-50')}><p className="text-sm font-bold text-slate-700">{c.hero.dropHint}</p><p className="mt-1 text-xs text-slate-500">{c.hero.fileNote}</p></div>
-                  </div>
+        <footer className="mt-20 border-t border-line bg-white"><div className="mx-auto max-w-6xl px-4 py-10 sm:px-6"><div className="flex items-center gap-2"><div className="flex h-7 w-7 items-center justify-center rounded-[7px] bg-trust text-white"><Icon name="ShieldCheck" className="h-3.5 w-3.5" /></div><span className="font-display text-sm font-extrabold text-ink">{c.brand}</span></div><p className="mt-4 max-w-3xl text-xs leading-relaxed text-ink-faint">{c.footer.legal}</p><p className="mt-6 text-xs text-ink-faint">© 2026 {c.brand}</p></div></footer>
 
-                  <div id="asistent" className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-soft sm:p-7">
-                    <div className="flex items-start gap-4"><div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-violet-50 text-violet-700"><Icon name="Bot" className="h-7 w-7" /></div><div><p className="text-xs font-extrabold uppercase tracking-[.16em] text-violet-700">{c.hero.chatEyebrow}</p><h2 className="mt-1 text-2xl font-black leading-tight text-slate-950">{c.hero.chatTitle}</h2></div></div>
-                    <p className="mt-5 leading-7 text-slate-600">{c.hero.chatText}</p>
-                    <form onSubmit={event => { event.preventDefault(); askChat(chatDraft); }} className="mt-6"><label className="sr-only" htmlFor="hero-chat-question">{c.chat.inputPlaceholder}</label><div className="flex items-center gap-2 rounded-2xl border border-slate-300 bg-slate-50 p-2 focus-within:border-trust-500 focus-within:ring-4 focus-within:ring-trust-100"><input id="hero-chat-question" value={chatDraft} onChange={event => setChatDraft(event.target.value)} className="min-w-0 flex-1 bg-transparent px-2 text-sm outline-none" placeholder={c.hero.chatPlaceholder} /><button type="submit" aria-label={c.chat.send} className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-trust-600 text-white transition hover:bg-trust-700"><Icon name="Send" className="h-4 w-4" /></button></div></form>
-                    <button type="button" onClick={() => askChat(chatDraft)} className="mt-4 inline-flex items-center gap-2 text-sm font-extrabold text-trust-700 hover:text-trust-900"><Icon name="MessageCircle" className="h-4 w-4" />{c.hero.chatButton}<Icon name="ArrowRight" className="h-4 w-4" /></button>
-                  </div>
-                </div>
-              </div>
-            </section>
+        {chatOpen && <div className="fixed inset-x-3 bottom-3 z-50 flex h-[min(560px,80vh)] flex-col overflow-hidden rounded-card border border-line bg-white shadow-trust sm:inset-auto sm:bottom-6 sm:right-6 sm:w-[380px]" role="dialog" aria-label={c.chat.title}><div className="flex items-center justify-between bg-trust px-4 py-3.5"><div className="flex items-center gap-2.5"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white"><Icon name="Bot" className="h-4 w-4" /></div><div><span className="font-display text-sm font-bold text-white">{c.chat.title}</span><p className="text-[11px] text-white/70">{c.chat.status}</p></div></div><button type="button" onClick={() => setChatOpen(false)} aria-label={c.chat.close} className="flex h-7 w-7 items-center justify-center rounded-full text-white/80 hover:bg-white/10 hover:text-white"><Icon name="X" className="h-4 w-4" /></button></div><div className="no-scrollbar flex-1 space-y-3 overflow-y-auto bg-paper px-4 py-4"><div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-sm bg-trust px-3.5 py-2.5 text-sm leading-6 text-white">{chatAsked ? chatQuestion : c.chat.userMsg}</div><div className="mr-auto max-w-[85%] rounded-2xl rounded-tl-sm border border-line bg-white px-3.5 py-2.5 text-sm leading-6 text-ink"><div className="mb-2 text-[10px] font-bold uppercase tracking-wide text-trust">{chatState === 'loading' ? c.chat.thinking : (chatMode === 'openai' ? c.chat.liveLabel : c.chat.demoLabel)}</div>{chatState === 'loading' ? <span className="inline-flex items-center gap-1"><span className="h-1.5 w-1.5 animate-bounce rounded-full bg-trust/60" /><span className="h-1.5 w-1.5 animate-bounce rounded-full bg-trust/60 [animation-delay:120ms]" /><span className="h-1.5 w-1.5 animate-bounce rounded-full bg-trust/60 [animation-delay:240ms]" /></span> : (chatAnswer || c.chat.aiMsg)}<button type="button" onClick={() => openModal()} className="mt-3 block w-full rounded-item bg-amber px-3 py-2 text-center text-xs font-semibold text-white transition-colors hover:bg-amber-dark">{c.chat.aiButton}</button></div><p className="text-center text-[11px] leading-5 text-ink-faint">{c.chat.disclaimer}</p></div><form onSubmit={event => { event.preventDefault(); askChat(chatDraft); }} className="flex items-center gap-2 border-t border-line p-3"><input type="text" value={chatDraft} onChange={event => setChatDraft(event.target.value)} placeholder={c.chat.inputPlaceholder} aria-label={c.chat.inputPlaceholder} className="min-w-0 flex-1 rounded-item border border-line bg-paper px-3 py-2.5 text-sm text-ink placeholder:text-ink-faint focus:border-trust focus:outline-none" /><button type="submit" aria-label={c.chat.send} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-item bg-trust text-white transition-colors hover:bg-trust-dark"><Icon name="Send" className="h-4 w-4" /></button></form></div>}
+        {!chatOpen && <button type="button" onClick={() => setChatOpen(true)} aria-label={c.chat.title} className="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-trust text-white shadow-trust transition-transform hover:-translate-y-1 sm:bottom-6 sm:right-6"><Icon name="MessageCircleMore" className="h-6 w-6" /></button>}
 
-            <section id="situacije" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-              <div className="max-w-3xl"><p className="text-sm font-extrabold uppercase tracking-[.16em] text-trust-600">{c.problems.eyebrow}</p><h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">{c.problems.title}</h2><p className="mt-4 text-lg leading-7 text-slate-600">{c.problems.lead}</p></div>
-              <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{problems.map(problem => { const item = problem[lang]; const isOpen = expanded === problem.id; const cardExperts = problem.expertIds.map(expertById).filter(Boolean); return <article key={problem.id} className={cx('rounded-3xl border bg-white p-5 shadow-soft transition sm:p-6', isOpen ? 'border-trust-300 ring-4 ring-trust-50 md:col-span-2 lg:col-span-2' : 'border-slate-200 hover:-translate-y-0.5 hover:border-trust-200')}>
-                <button type="button" onClick={() => setExpanded(isOpen ? null : problem.id)} className="flex w-full items-start gap-4 text-left focus:outline-none focus:ring-4 focus:ring-trust-100"><div className={cx('grid h-12 w-12 shrink-0 place-items-center rounded-2xl border', toneClasses[problem.tone])}><Icon name={problem.icon} /></div><div className="min-w-0 flex-1"><div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide text-slate-600">{item.tag}</span>{isOpen && <span className="text-xs font-bold text-trust-600">{c.problems.close}</span>}</div><h3 className="mt-2 text-lg font-extrabold leading-6 text-slate-950">{item.title}</h3></div><Icon name={isOpen ? 'ChevronUp' : 'ChevronDown'} className="mt-2 h-5 w-5 shrink-0 text-slate-400" /></button>
-                {isOpen && <div className="mt-5 border-t border-slate-100 pt-5 md:ml-16"><div className="rounded-2xl bg-slate-50 p-4"><div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wide text-trust-700"><Icon name="Lightbulb" className="h-4 w-4" />{c.problems.quickInfo}</div><p className="mt-2 text-sm leading-6 text-slate-700">{item.info}</p></div><p className="mt-4 text-sm font-bold leading-6 text-slate-800">{item.action}</p><p className="mt-5 text-xs font-extrabold uppercase tracking-wide text-slate-500">{c.problems.experts}</p><div className="mt-2 flex flex-wrap gap-2">{cardExperts.map(expert => <button key={expert.id} type="button" onClick={() => openIntake(problem.id, expert.id)} className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 transition hover:border-trust-300 hover:text-trust-700"><span className={cx('grid h-6 w-6 place-items-center rounded-full text-[10px] font-black', expert.tone)}>{expert.initials}</span>{expert.name}<Icon name="BadgeCheck" className="h-3.5 w-3.5 text-trust-600" /></button>)}</div><div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center"><button type="button" onClick={() => openIntake(problem.id)} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-trust-600 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-trust-700 focus:outline-none focus:ring-4 focus:ring-trust-100"><Icon name="MessageCircle" className="h-4 w-4" />{c.problems.action}</button><span className="text-xs leading-5 text-slate-500">{c.problems.note}</span></div></div>}
-              </article>; })}</div>
-            </section>
-
-            <section id="strucnjaci" className="border-y border-slate-200 bg-white">
-              <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-                <div className="max-w-3xl"><p className="text-sm font-extrabold uppercase tracking-[.16em] text-trust-600">{c.directory.eyebrow}</p><h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">{c.directory.title}</h2><p className="mt-4 text-lg leading-7 text-slate-600">{c.directory.lead}</p></div>
-                <div className="scrollbar-hide mt-10 flex gap-5 overflow-x-auto pb-4 lg:grid lg:grid-cols-3 lg:overflow-visible">{experts.map(expert => { const item = expert[lang]; return <article key={expert.id} className="min-w-[290px] rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-soft sm:p-6 lg:min-w-0"><div className="flex items-start gap-4"><div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl"><img src={expert.avatar} alt={expert.name} className="h-full w-full object-cover" onError={event => { event.currentTarget.style.display = 'none'; if (event.currentTarget.nextElementSibling) event.currentTarget.nextElementSibling.style.display = 'grid'; }} /><div className={cx('hidden h-full w-full place-items-center text-lg font-black', expert.tone)}>{expert.initials}</div></div><div className="min-w-0 flex-1"><h3 className="text-lg font-extrabold text-slate-950">{expert.name}</h3><div className="mt-1 flex items-center gap-1 text-xs font-bold text-trust-700"><Icon name="BadgeCheck" className="h-3.5 w-3.5" />{c.directory.verified}</div></div></div><p className="mt-5 text-sm font-extrabold text-slate-800">{item.badge}</p><p className="mt-1 text-sm font-bold text-trust-700">{item.specialization}</p><p className="mt-3 text-sm leading-6 text-slate-600">{item.bio}</p><button type="button" onClick={() => openIntake('', expert.id)} className="mt-5 flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-trust-200 bg-white px-4 py-3 text-sm font-extrabold text-trust-700 transition hover:bg-trust-50"><Icon name="Send" className="h-4 w-4" />{c.directory.ask} {expert.name}</button></article>; })}</div>
-              </div>
-            </section>
-          </main>
-
-          <footer className="bg-slate-950 text-slate-300"><div className="mx-auto flex max-w-7xl flex-col gap-7 px-4 py-12 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:px-8"><div className="max-w-3xl"><div className="flex items-center gap-3"><div className="grid h-10 w-10 place-items-center rounded-2xl bg-trust-600 font-black text-white">B</div><span className="font-extrabold text-white">{c.brand}</span></div><h2 className="mt-6 text-xl font-extrabold text-white">{c.footer.title}</h2><p className="mt-3 text-sm leading-7 text-slate-400">{c.footer.disclaimer}</p></div><p className="shrink-0 text-xs font-semibold text-slate-500">{c.footer.demo}</p></div></footer>
-
-          {chatOpen && <div className="fixed bottom-24 right-4 z-40 w-[calc(100vw-2rem)] max-w-sm overflow-hidden rounded-3xl border border-trust-200 bg-white shadow-2xl sm:bottom-24 sm:right-6" role="dialog" aria-label={c.chat.title}><div className="flex items-center justify-between bg-trust-600 px-4 py-4 text-white"><div className="flex items-center gap-3"><div className="grid h-10 w-10 place-items-center rounded-2xl bg-white/15"><Icon name="Bot" /></div><div><p className="font-extrabold">{c.chat.title}</p><p className="text-xs text-trust-100">{c.chat.status}</p></div></div><button type="button" onClick={() => setChatOpen(false)} aria-label={c.chat.close} className="rounded-lg p-2 text-trust-100 hover:bg-white/10 hover:text-white"><Icon name="X" /></button></div><div className="max-h-[55vh] space-y-4 overflow-y-auto bg-slate-50 p-4"><div className="ml-8 rounded-2xl rounded-tr-sm bg-trust-600 p-3 text-sm leading-6 text-white">{chatAsked ? chatQuestion : c.chat.mockUser}</div><div className="mr-4 rounded-2xl rounded-tl-sm border border-slate-200 bg-white p-3 text-sm leading-6 text-slate-700 shadow-sm"><div className="mb-2 text-[10px] font-extrabold uppercase tracking-wide text-trust-600">{chatState === 'loading' ? c.chat.thinking : (chatMode === 'openai' ? c.chat.liveLabel : c.chat.demoLabel)}</div>{chatState === 'loading' ? <span className="inline-flex items-center gap-1"><span className="h-1.5 w-1.5 animate-bounce rounded-full bg-trust-400" /><span className="h-1.5 w-1.5 animate-bounce rounded-full bg-trust-400 [animation-delay:120ms]" /><span className="h-1.5 w-1.5 animate-bounce rounded-full bg-trust-400 [animation-delay:240ms]" /></span> : (chatAnswer || c.chat.answer)}</div><button type="button" onClick={() => { setChatOpen(false); openIntake(); }} className="flex w-full items-center justify-center gap-2 rounded-xl border border-trust-200 bg-white px-4 py-3 text-sm font-extrabold text-trust-700 transition hover:bg-trust-50"><Icon name="FileCheck2" className="h-4 w-4" />{c.chat.sendToExpert}</button><p className="text-center text-[11px] leading-5 text-slate-500">{c.chat.disclaimer}</p></div><form onSubmit={event => { event.preventDefault(); askChat(chatDraft); }} className="flex gap-2 border-t border-slate-200 bg-white p-3"><input value={chatDraft} onChange={event => setChatDraft(event.target.value)} className="min-w-0 flex-1 rounded-xl border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder={c.chat.inputPlaceholder} /><button type="submit" aria-label={c.chat.send} className="grid h-11 w-11 shrink-0 rounded-xl bg-trust-600 text-white hover:bg-trust-700"><Icon name="Send" className="h-4 w-4" /></button></form></div>}
-
-          <button type="button" onClick={() => setChatOpen(previous => !previous)} aria-label={chatOpen ? c.chat.close : c.chat.title} className="fixed bottom-5 right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-trust-600 text-white shadow-xl shadow-trust-600/30 transition hover:scale-105 hover:bg-trust-700 focus:outline-none focus:ring-4 focus:ring-trust-100 sm:bottom-6 sm:right-6"><Icon name={chatOpen ? 'X' : 'MessageCircle'} className="h-6 w-6" /></button>
-
-          {intakeOpen && <Modal titleId="intake-title" onClose={() => setIntakeOpen(false)}>
-            <div className="safe-bottom">
-              <div className="flex items-start justify-between gap-4 border-b border-slate-100 p-5 sm:p-7"><div className="flex items-start gap-3"><div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-trust-50 text-trust-600"><Icon name="FileCheck2" /></div><div><h2 id="intake-title" className="text-2xl font-black leading-tight text-slate-950">{c.form.title}</h2><p className="mt-2 text-sm leading-6 text-slate-600">{c.form.subtitle}</p>{selectedExpert && <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-trust-50 px-3 py-1.5 text-xs font-extrabold text-trust-700"><Icon name="BadgeCheck" className="h-3.5 w-3.5" />{c.form.selectedExpert}: {selectedExpert.name}</p>}</div></div><button type="button" onClick={() => setIntakeOpen(false)} aria-label={c.form.close} className="rounded-xl p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"><Icon name="X" /></button></div>
-              <form onSubmit={submitDocument} className="space-y-5 p-5 sm:p-7">
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="block text-sm font-extrabold text-slate-700">{c.form.name} <span className="font-normal text-slate-400">({c.form.nameHint})</span><input value={form.name} onChange={event => updateField('name', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder={lang === 'ro' ? 'Numele tău' : 'Tvoje ime'} /></label>
-                  <label className="block text-sm font-extrabold text-slate-700">{c.form.email} <span className="text-red-500">*</span><input type="email" required value={form.email} onChange={event => updateField('email', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder="vi@email.com" /></label>
-                  <label className="block text-sm font-extrabold text-slate-700">{c.form.phone} <span className="text-red-500">*</span><span className="block text-xs font-normal text-slate-400">{c.form.phoneHint}</span><input type="tel" required value={form.phone} onChange={event => updateField('phone', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder="+420 …" /></label>
-                  <label className="block text-sm font-extrabold text-slate-700">{c.form.problem}<select value={form.problem} onChange={event => updateField('problem', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100"><option value="">{c.form.chooseProblem}</option>{problems.map(problem => <option key={problem.id} value={problem.id}>{problem[lang].title}</option>)}<option value="other">{c.form.unsure}</option></select></label>
-                </div>
-                <label className="block text-sm font-extrabold text-slate-700">{c.form.description}<textarea value={form.description} onChange={event => updateField('description', event.target.value)} rows="3" className="mt-2 w-full resize-none rounded-xl border border-slate-300 px-3.5 py-3 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder={c.form.descriptionPlaceholder} /></label>
-                <div><p className="text-sm font-extrabold text-slate-700">{c.form.document} <span className="text-red-500">*</span></p><div className={cx('mt-2 rounded-2xl border-2 border-dashed p-5 transition', drag ? 'border-trust-600 bg-trust-50' : 'border-slate-300 bg-slate-50')} onDragOver={event => { event.preventDefault(); setDrag(true); }} onDragLeave={() => setDrag(false)} onDrop={event => { event.preventDefault(); setDrag(false); pick(event.dataTransfer.files); }}><input ref={input} type="file" className="hidden" accept=".pdf,.jpg,.jpeg,.png" capture="environment" onChange={event => pick(event.target.files)} /><div className="flex flex-col items-center text-center"><Icon name="Camera" className="h-8 w-8 text-trust-600" /><p className="mt-2 text-sm font-bold text-slate-700">{file ? file.name : c.form.camera}</p><p className="mt-1 text-xs text-slate-500">{c.form.fileHint} · {c.hero.fileNote}</p><button type="button" onClick={() => input.current?.click()} className="mt-4 min-h-11 rounded-xl border border-trust-200 bg-white px-4 py-2.5 text-sm font-extrabold text-trust-700 transition hover:bg-trust-50">{file ? c.form.changeFile : c.form.camera}</button></div></div></div>
-                <label className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-700"><input type="checkbox" checked={form.consent} onChange={event => updateField('consent', event.target.checked)} className="mt-1 h-5 w-5 shrink-0 rounded border-slate-300 text-trust-600 focus:ring-trust-500" />{c.form.consent}</label>
-                <button type="submit" disabled={submission.state === 'loading'} className="flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl bg-trust-600 px-5 py-4 text-base font-extrabold text-white shadow-lg shadow-trust-600/20 transition hover:bg-trust-700 focus:outline-none focus:ring-4 focus:ring-trust-100 disabled:cursor-wait disabled:opacity-60">{submission.state === 'loading' ? c.form.sending : c.form.submit}<Icon name="ArrowRight" /></button>
-                <p className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm font-bold leading-6 text-amber-950">{c.form.disclaimer}</p>
-                <p className="flex items-start gap-2 text-xs leading-5 text-slate-500"><Icon name="ShieldCheck" className="mt-0.5 h-4 w-4 shrink-0 text-safe-600" />{c.form.security}</p>
-                {submission.message && <div role="status" className={cx('rounded-xl border px-4 py-3 text-sm leading-6', submission.state === 'success' ? 'border-emerald-200 bg-emerald-50 text-emerald-800' : submission.state === 'error' ? 'border-red-200 bg-red-50 text-red-800' : 'border-trust-200 bg-trust-50 text-trust-800')}>{submission.message}</div>}
-              </form>
-            </div>
-          </Modal>}
-
-          {accessOpen && <Modal titleId="access-title" onClose={() => setAccessOpen(false)}>
-            <div className="p-5 sm:p-7"><div className="flex items-start justify-between gap-4"><div><span className="inline-flex rounded-full bg-trust-50 px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-trust-700">BalkanCZ Asistent</span><h2 id="access-title" className="mt-3 text-2xl font-black text-slate-950">{c.nav.accessTitle}</h2><p className="mt-2 leading-6 text-slate-600">{c.nav.accessText}</p></div><button type="button" onClick={() => setAccessOpen(false)} aria-label={c.nav.close} className="rounded-xl p-2 text-slate-400 hover:bg-slate-100"><Icon name="X" /></button></div><div className="mt-7 grid gap-3 sm:grid-cols-2"><button type="button" onClick={() => { setAccessOpen(false); document.getElementById('strucnjaci')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex min-h-14 items-center justify-center gap-2 rounded-2xl border border-trust-200 bg-trust-50 px-4 py-3 text-sm font-extrabold text-trust-700 hover:bg-trust-100"><Icon name="BadgeCheck" />{c.nav.login}</button><button type="button" onClick={() => { setAccessOpen(false); openIntake(''); }} className="flex min-h-14 items-center justify-center gap-2 rounded-2xl bg-trust-600 px-4 py-3 text-sm font-extrabold text-white hover:bg-trust-700"><Icon name="Megaphone" />{c.nav.post}</button></div></div>
-          </Modal>}
-        </div>
-      );
+        {modalOpen && <Modal titleId="intake-title" onClose={closeModal}><div className="safe-bottom"><div className="flex items-center justify-between border-b border-line px-5 py-4"><h2 id="intake-title" className="font-display text-lg font-bold text-ink">{c.form.title}</h2><button type="button" onClick={closeModal} aria-label={c.form.close} className="flex h-8 w-8 items-center justify-center rounded-full text-ink-faint hover:bg-paper hover:text-ink"><Icon name="X" className="h-[18px] w-[18px]" /></button></div>{submission.state === 'success' ? <div className="flex flex-col items-center px-6 py-12 text-center"><div className="flex h-14 w-14 items-center justify-center rounded-full bg-trust-light text-trust"><Icon name="FileCheck2" className="h-7 w-7" /></div><p className="mt-4 font-display text-lg font-bold text-ink">{lang === 'ro' ? 'Trimis cu succes' : 'Uspješno poslano'}</p><p className="mt-1.5 text-sm text-ink-soft">{c.form.success}</p></div> : <form onSubmit={submitDocument} className="px-5 py-5"><label className="block text-sm"><span className="mb-1.5 block font-medium text-ink">{c.form.name}</span><input type="text" value={form.name} onChange={event => updateField('name', event.target.value)} className="w-full rounded-item border border-line bg-paper px-3.5 py-2.5 text-sm text-ink focus:border-trust focus:outline-none" /></label><label className="mt-4 block text-sm"><span className="mb-1.5 block font-medium text-ink">{c.form.email} <span className="text-red-500">*</span></span><input required type="email" value={form.email} onChange={event => updateField('email', event.target.value)} className="w-full rounded-item border border-line bg-paper px-3.5 py-2.5 text-sm text-ink focus:border-trust focus:outline-none" placeholder="vi@email.com" /></label><label className="mt-4 block text-sm"><span className="mb-1.5 block font-medium text-ink">{c.form.contact} <span className="text-red-500">*</span></span><span className="mb-1.5 block text-xs text-ink-faint">{c.form.contactHint}</span><input required type="tel" value={form.phone} onChange={event => updateField('phone', event.target.value)} placeholder="+420 / +40" className="w-full rounded-item border border-line bg-paper px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-faint focus:border-trust focus:outline-none" /></label><label className="mt-4 block text-sm"><span className="mb-1.5 block font-medium text-ink">{c.form.problemType}</span><select value={form.problem} onChange={event => updateField('problem', event.target.value)} className="w-full rounded-item border border-line bg-paper px-3.5 py-2.5 text-sm text-ink focus:border-trust focus:outline-none"><option value="">{c.form.problemPlaceholder}</option>{problems.map(problem => <option key={problem.id} value={problem.id}>{problem[lang].title}</option>)}<option value="other">{lang === 'ro' ? 'Altă situație' : 'Druga situacija'}</option></select></label><label className="mt-4 block text-sm"><span className="mb-1.5 block font-medium text-ink">{c.form.description}</span><textarea rows="3" value={form.description} onChange={event => updateField('description', event.target.value)} placeholder={c.form.descriptionPlaceholder} className="w-full resize-none rounded-item border border-line bg-paper px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-faint focus:border-trust focus:outline-none" /></label><div className="mt-4 text-sm"><span className="mb-1.5 block font-medium text-ink">{c.form.upload} <span className="text-red-500">*</span></span><input ref={input} type="file" className="hidden" accept=".pdf,.jpg,.jpeg,.png" capture="environment" onChange={event => pick(event.target.files)} /><div onDragOver={event => { event.preventDefault(); setDragActive(true); }} onDragLeave={() => setDragActive(false)} onDrop={event => { event.preventDefault(); setDragActive(false); pick(event.dataTransfer.files); }} onClick={() => input.current?.click()} className={cx('flex cursor-pointer flex-col items-center justify-center rounded-item border-2 border-dashed px-4 py-7 text-center transition-colors', dragActive ? 'border-trust bg-trust-light' : 'border-line bg-paper hover:border-trust/40')}><Icon name="UploadCloud" className={cx('h-[22px] w-[22px]', dragActive ? 'text-trust' : 'text-ink-faint')} /><p className="mt-2 text-xs text-ink-faint">{file ? <span className="font-semibold text-trust">{file.name}</span> : c.form.uploadHint}</p><span className="mt-3 rounded-item border border-line bg-white px-3 py-2 text-xs font-semibold text-trust">{file ? c.form.changeFile : c.form.chooseFile}</span></div></div><label className="mt-4 flex items-start gap-2.5 rounded-item bg-paper p-3 text-xs leading-5 text-ink-soft"><input type="checkbox" checked={form.consent} onChange={event => updateField('consent', event.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 accent-[#1B4F91]" />{c.form.consent}</label><button type="submit" disabled={submission.state === 'loading'} className="mt-5 w-full rounded-item bg-trust py-3 text-sm font-semibold text-white shadow-trust-sm transition-colors hover:bg-trust-dark disabled:cursor-wait disabled:opacity-60">{submission.state === 'loading' ? c.form.sending : c.form.submit}</button><p className="mt-3 flex items-start gap-1.5 text-xs leading-snug text-ink-faint"><Icon name="ShieldCheck" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-trust" />{c.form.trust} {c.form.security}</p>{submission.message && <div role="status" className={cx('mt-4 rounded-item border px-3 py-2.5 text-xs leading-5', submission.state === 'error' ? 'border-red-200 bg-red-50 text-red-800' : 'border-trust/20 bg-trust-light text-trust-dark')}>{submission.message}</div>}</form>}</div></Modal>}
+      </div>;
     }
 
     ReactDOM.createRoot(document.getElementById('root')).render(<App />);
