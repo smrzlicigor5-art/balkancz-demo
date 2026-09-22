@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#1E40AF" />
-  <title>Asistenta.cz — Pomoć u Češkoj</title>
-  <meta name="description" content="Jednostavna administrativna pomoć za ljude iz Ex-Yu regije i Rumunjske u Češkoj." />
+  <title>BalkanCZ Asistent — Pomoć u Češkoj</title>
+  <meta name="description" content="BalkanCZ Asistent povezuje jednostavno objašnjenje, AI pomoć i verificirane stručnjake za ljude iz Ex-Yu regije i Rumunjske u Češkoj." />
   <script src="https://cdn.tailwindcss.com"></script>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -60,206 +60,270 @@
 
     const copy = {
       exyu: {
-        brand: 'Asistenta.cz',
-        brandSub: 'Pomoć u Češkoj · BalkanCZ',
-        topBar: 'Prvi korak je besplatan i neobvezujući.',
-        nav: { situations: 'Situacije', how: 'Kako pomažemo', board: 'Zajednica' },
-        emergency: 'Hitna provjera pisma',
-        hero: {
-          eyebrow: 'Administrativna pomoć na tvom jeziku',
-          title: 'Birokracija u Češkoj ne mora biti stresna. Tu smo da pomognemo na tvom jeziku.',
-          description: 'Ne razumiješ dopis od úřada, imaš problem s gazdom, poslom ili osiguranjem? Saznaj svoja prava ili nam pošalji dokument na besplatnu procjenu.',
-          tags: ['Na tvom jeziku', 'Bez obveze', 'Prvi korak besplatan'],
-          cardTitle: 'Imaš pismo ili kaznu koju ne razumiješ?',
-          cardText: 'Slikaj mobitelom i pošalji. Javljamo ti što piše, koji je važan rok i što možeš napraviti.',
-          cardButton: 'Pošalji dokument na besplatnu procjenu',
-          dropHint: 'Povuci dokument ovdje ili ga odaberi s mobitela',
-          fileNote: 'PDF, JPG ili PNG · maksimalno 3 MB',
-          reassurance: 'Ne moraš znati češki ni naziv institucije. Kreni od problema.'
+        brand: 'BalkanCZ Asistent',
+        brandSub: 'Pomoć u Češkoj · Asistenta.ro',
+        topBar: 'Besplatno prvo objašnjenje · bez obveze',
+        nav: {
+          problems: 'Situacije',
+          experts: 'Stručnjaci',
+          assistant: 'AI asistent',
+          access: 'Prijava / Oglasi',
+          accessTitle: 'Prijava / Oglasi',
+          accessText: 'Ovo je demo ulaz za buduću zajednicu stručnjaka i oglasa.',
+          login: 'Prijava stručnjaka',
+          post: 'Objavi oglas',
+          close: 'Zatvori'
         },
-        how: {
-          eyebrow: 'Jednostavno, korak po korak',
-          title: 'Kako ti pomažemo?',
-          lead: 'Prvo dobiješ jasno objašnjenje. Tek onda odlučuješ treba li ti dodatna pomoć.',
-          steps: [
-            ['1', 'Pošalji situaciju ili pismo', 'Potpuno besplatno i neobvezujuće.', 'Send'],
-            ['2', 'Dobiješ objašnjenje i savjet', 'Naš tim ti na tvom jeziku objasni što se događa. Ako je sitnica, riješiš je sam po našim uputama.', 'MessageCircle'],
-            ['3', 'Rješenje bez stresa', 'Ako želiš da mi preuzmemo slučaj, prvo dobiješ jasnu ponudu. Ništa ne plaćaš prije dogovora.', 'ShieldCheck']
-          ]
+        hero: {
+          eyebrow: 'Jednostavno razumijevanje. Stvarna ljudska pomoć.',
+          title: 'Birokracija u Češkoj bez stresa.',
+          description: 'Ne razumiješ pismo, imaš problem s osiguranjem, vizom ili gazdom? Pomoći ćemo ti na tvom jeziku.',
+          tags: ['Ex-Yu i Română', 'Bez skrivenih troškova', 'Prvi korak besplatan'],
+          uploadEyebrow: 'Hitni put',
+          uploadTitle: 'Hitno je? Pošalji pismo na besplatnu procjenu.',
+          uploadText: 'Slikaj dokument mobitelom. Naš tim prvo provjerava što piše i koji je sljedeći korak.',
+          uploadButton: 'Slikaj i pošalji',
+          dropHint: 'Povuci pismo ovdje ili otvori obrazac',
+          fileNote: 'PDF, JPG ili PNG · maksimalno 3 MB',
+          chatEyebrow: 'Jednostavno pitanje',
+          chatTitle: 'Pitaj našeg digitalnog asistenta.',
+          chatText: 'Za osnovna pitanja odgovara odmah. Ako je slučaj složen, povezuje te sa stvarnim stručnjakom.',
+          chatPlaceholder: 'Npr. Koliko dana imam za prijavu VZP-a?',
+          chatButton: 'Pitaj asistenta',
+          reassurance: 'Ne moraš znati naziv institucije. Kreni od onoga što ti se dogodilo.'
         },
         problems: {
-          eyebrow: 'Kreni od svog problema',
+          eyebrow: 'Problem-first pomoć',
           title: 'Što ti se dogodilo?',
-          lead: 'Ne moraš znati naziv zakona ni institucije. Odaberi ono što ti je najbliže.',
-          open: 'Prikaži osnovne informacije',
+          lead: 'Klikni na svoju situaciju. Dobit ćeš kratko objašnjenje i vidjeti tko ti može pomoći.',
+          open: 'Prikaži pravila i stručnjake',
           close: 'Sakrij informacije',
-          action: 'Želim osobnu pomoć',
-          note: 'Informativno: rokovi i obaveze ovise o tvom dokumentu i statusu.'
+          quickInfo: 'Brza informacija',
+          experts: 'Stručnjaci za ovu situaciju',
+          needHelp: 'Trebaš pomoć?',
+          action: 'Besplatna procjena slučaja',
+          note: 'Informativno: točan rok i postupak uvijek provjeri prema svom dokumentu.'
         },
-        board: {
-          eyebrow: 'Ljudi pomažu ljudima',
-          title: 'Oglasna ploča zajednice',
-          notice: 'Besplatno objavljivanje oglasa za poslove, prijevoz i smještaj tijekom demo faze!',
-          filters: [['all', 'Sve'], ['job', 'Posao'], ['transport', 'Prijevoz'], ['housing', 'Stanovi'], ['courses', 'Tečajevi jezika']],
-          sample: 'Demo oglas'
+        directory: {
+          eyebrow: 'Provjereni ljudi za teške slučajeve',
+          title: 'Tvoj problem rješavaju stvarni ljudi',
+          lead: 'Kad jednostavno objašnjenje nije dovoljno, možeš poslati upit stručnjaku koji razumije jezik i život u Češkoj.',
+          verified: 'Verificirani stručnjak',
+          ask: 'Pošalji upit'
         },
         form: {
           title: 'Besplatna procjena tvog slučaja',
-          subtitle: 'Pošalji samo ono što je potrebno. Javit ćemo ti se s jasnim prvim korakom.',
+          subtitle: 'Pošalji osnovne podatke i dokument. Stručnjak će ti se javiti s jasnim sljedećim korakom.',
+          selectedExpert: 'Upit za stručnjaka',
           name: 'Ime i prezime',
           nameHint: 'opcionalno',
-          phone: 'Broj telefona / WhatsApp',
+          phone: 'Kontakt / WhatsApp broj',
           phoneHint: 'važno za brzi odgovor',
-          email: 'E-mail',
-          emailHint: 'za potvrdu zahtjeva',
-          language: 'Jezik komunikacije',
-          problem: 'Vrsta problema',
+          email: 'E-mail za potvrdu',
+          problem: 'Tema',
           chooseProblem: 'Odaberi temu',
-          unsure: 'Nisam siguran / nešto drugo',
+          unsure: 'Nisam siguran / drugo',
           description: 'Kratak opis',
-          descriptionPlaceholder: 'U jednoj ili dvije rečenice napiši što te brine…',
-          document: 'Slika pisma ili dokument',
+          descriptionPlaceholder: 'Što se dogodilo? Napiši ukratko…',
+          document: 'Dokument ili fotografija pisma',
           camera: 'Slikaj ili odaberi dokument',
           changeFile: 'Promijeni dokument',
           fileHint: 'Na mobitelu možeš odmah otvoriti kameru.',
           consent: 'Slažem se da me kontaktirate u vezi rješavanja ovog upita.',
-          submit: 'Pošalji na besplatnu analizu',
-          sending: 'Šaljemo zahtjev…',
-          security: 'Dokumente pregledava samo naš ovlašteni tim. Nemoj slati više osobnih podataka nego što je potrebno.',
+          submit: 'Zatraži ponudu stručnjaka',
+          sending: 'Šaljemo upit…',
+          security: 'Dokument pregledava samo naš tim. Nemoj slati više osobnih podataka nego što je potrebno.',
+          disclaimer: 'Nema skrivenih troškova. Javljamo točnu, fiksnu cijenu rješenja prije nego išta platiš.',
           close: 'Zatvori',
           missingFile: 'Prvo dodaj sliku ili PDF dokument.',
-          missingBasics: 'Unesi e-mail i telefon, prihvati kontakt i dodaj dokument.',
+          missingBasics: 'Unesi e-mail i WhatsApp broj, prihvati kontakt i dodaj dokument.',
           invalidFile: 'Molimo odaberi PDF, JPG ili PNG dokument.',
           tooLarge: 'Dokument je prevelik. Maksimalna veličina je 3 MB.',
-          success: 'Zahtjev je zaprimljen. Poslali smo potvrdu na tvoj e-mail.',
-          error: 'Trenutno nije moguće poslati zahtjev. Pokušaj ponovno ili nam se javi izravno.'
+          success: 'Upit je zaprimljen. Poslali smo potvrdu na tvoj e-mail.',
+          error: 'Trenutno nije moguće poslati upit. Pokušaj ponovno.'
+        },
+        chat: {
+          title: 'Digitalni Znalac',
+          status: 'Odgovara odmah',
+          heroQuestion: 'Imaš jednostavno pitanje? Pitaj našeg digitalnog asistenta.',
+          mockUser: 'Treba li mi sudski prevoditelj za prijavu na OAMP?',
+          answer: 'Za osnovne prijave sudski prevoditelj nije potreban u svakoj situaciji, ali sve ovisi o dokumentu i uputama OAMP-a. Ako službeno pismo traži ovjereni prijevod ili dopunu, naši stručnjaci ga mogu besplatno pregledati.',
+          sendToExpert: 'Pošalji pismo stručnjaku',
+          inputPlaceholder: 'Napiši svoje pitanje…',
+          send: 'Pošalji',
+          close: 'Zatvori asistenta',
+          disclaimer: 'AI daje opće informacije, ne pravni savjet.'
         },
         footer: {
-          title: 'Pomoć koja počinje razumijevanjem problema.',
-          disclaimer: 'Pravna napomena: Pružamo administrativne, prevoditeljske i asistentske usluge u sklopu slobodnog obrta (živnost volná). Nismo ovlašteni odvjetnički ured niti porezni savjetnici (daňoví poradci). Informacije su opće i ne zamjenjuju individualni pravni ili porezni savjet.',
+          title: 'Jedan problem. Jedan jasan sljedeći korak.',
+          disclaimer: 'Pravna napomena: Pružamo administrativne, prevoditeljske i asistentske usluge u sklopu slobodnog obrta (živnost volná). Nismo ovlašteni odvjetnički ured niti porezni savjetnici. Informacije su opće i ne zamjenjuju individualni pravni ili porezni savjet.',
           demo: 'Demo verzija · 2026'
         }
       },
       ro: {
-        brand: 'Asistenta.cz',
-        brandSub: 'Ajutor în Cehia · BalkanCZ',
-        topBar: 'Primul pas este gratuit și fără obligații.',
-        nav: { situations: 'Situații', how: 'Cum ajutăm', board: 'Comunitate' },
-        emergency: 'Verificare urgentă a scrisorii',
-        hero: {
-          eyebrow: 'Ajutor administrativ în limba ta',
-          title: 'Birocrația din Cehia nu trebuie să fie un coșmar. Suntem aici să te ajutăm pe limba ta.',
-          description: 'Nu înțelegi o scrisoare de la úřad, ai probleme cu proprietarul, locul de muncă sau asigurarea? Află ce trebuie să faci sau trimite-ne documentul pentru o evaluare gratuită.',
-          tags: ['În limba ta', 'Fără obligații', 'Primul pas gratuit'],
-          cardTitle: 'Ai primit o scrisoare sau o amendă pe care nu o înțelegi?',
-          cardText: 'Fă o fotografie cu telefonul și trimite-o. Îți explicăm ce scrie, ce termen este important și ce poți face.',
-          cardButton: 'Trimite documentul pentru evaluare gratuită',
-          dropHint: 'Trage documentul aici sau alege-l de pe telefon',
-          fileNote: 'PDF, JPG sau PNG · maximum 3 MB',
-          reassurance: 'Nu trebuie să știi cehă sau numele instituției. Începe cu problema ta.'
+        brand: 'BalkanCZ Asistent',
+        brandSub: 'Ajutor în Cehia · Asistenta.ro',
+        topBar: 'Prima explicație este gratuită · fără obligații',
+        nav: {
+          problems: 'Situații',
+          experts: 'Specialiști',
+          assistant: 'Asistent AI',
+          access: 'Autentificare / Anunțuri',
+          accessTitle: 'Autentificare / Anunțuri',
+          accessText: 'Acesta este accesul demo pentru viitoarea comunitate de specialiști și anunțuri.',
+          login: 'Autentificare specialist',
+          post: 'Publică un anunț',
+          close: 'Închide'
         },
-        how: {
-          eyebrow: 'Simplu, pas cu pas',
-          title: 'Cum te ajutăm?',
-          lead: 'Primești mai întâi o explicație clară. Abia apoi decizi dacă ai nevoie de ajutor suplimentar.',
-          steps: [
-            ['1', 'Trimite situația sau scrisoarea', 'Complet gratuit și fără obligații.', 'Send'],
-            ['2', 'Primești explicația și recomandarea', 'Echipa noastră îți explică situația în limba ta. Dacă este simplu, o poți rezolva singur cu instrucțiunile noastre.', 'MessageCircle'],
-            ['3', 'Rezolvare fără stres', 'Dacă vrei să preluăm cazul, primești mai întâi o ofertă clară. Nu plătești nimic înainte de acord.', 'ShieldCheck']
-          ]
+        hero: {
+          eyebrow: 'Înțelegere simplă. Ajutor real de la oameni.',
+          title: 'Birocrația din Cehia fără stres.',
+          description: 'Nu înțelegi o scrisoare, ai probleme cu asigurarea, viza sau proprietarul? Te ajutăm în limba ta.',
+          tags: ['Ex-Yu și Română', 'Fără costuri ascunse', 'Primul pas gratuit'],
+          uploadEyebrow: 'Calea rapidă',
+          uploadTitle: 'Este urgent? Trimite scrisoarea pentru o evaluare gratuită.',
+          uploadText: 'Fotografiază documentul cu telefonul. Echipa noastră verifică mai întâi ce scrie și care este următorul pas.',
+          uploadButton: 'Fotografiază și trimite',
+          dropHint: 'Trage scrisoarea aici sau deschide formularul',
+          fileNote: 'PDF, JPG sau PNG · maximum 3 MB',
+          chatEyebrow: 'Întrebare simplă',
+          chatTitle: 'Întreabă asistentul nostru digital.',
+          chatText: 'Răspunde imediat la întrebări de bază. Dacă situația este complexă, te conectează cu un specialist real.',
+          chatPlaceholder: 'Ex.: În câte zile trebuie să anunț VZP?',
+          chatButton: 'Întreabă asistentul',
+          reassurance: 'Nu trebuie să știi numele instituției. Începe cu ce ți s-a întâmplat.'
         },
         problems: {
-          eyebrow: 'Începe cu problema ta',
+          eyebrow: 'Ajutor pornind de la problemă',
           title: 'Ce ți s-a întâmplat?',
-          lead: 'Nu trebuie să știi numele legii sau al instituției. Alege situația cea mai apropiată.',
-          open: 'Arată informațiile de bază',
+          lead: 'Apasă pe situația ta. Vei vedea o explicație scurtă și cine te poate ajuta.',
+          open: 'Arată regulile și specialiștii',
           close: 'Ascunde informațiile',
-          action: 'Vreau ajutor personal',
-          note: 'Informativ: termenele și obligațiile depind de documentul și statutul tău.'
+          quickInfo: 'Informație rapidă',
+          experts: 'Specialiști pentru această situație',
+          needHelp: 'Ai nevoie de ajutor?',
+          action: 'Evaluare gratuită a cazului',
+          note: 'Informativ: termenul și procedura exactă trebuie verificate în documentul tău.'
         },
-        board: {
-          eyebrow: 'Oamenii se ajută între ei',
-          title: 'Panoul comunității',
-          notice: 'Publicarea anunțurilor pentru locuri de muncă, transport și cazare este gratuită în etapa demo!',
-          filters: [['all', 'Toate'], ['job', 'Locuri de muncă'], ['transport', 'Transport'], ['housing', 'Cazare'], ['courses', 'Cursuri de limbă']],
-          sample: 'Anunț demo'
+        directory: {
+          eyebrow: 'Oameni verificați pentru cazurile dificile',
+          title: 'Problema ta este rezolvată de oameni reali',
+          lead: 'Când explicația simplă nu este suficientă, trimiți o întrebare unui specialist care înțelege limba și viața în Cehia.',
+          verified: 'Specialist verificat',
+          ask: 'Trimite o întrebare'
         },
         form: {
           title: 'Evaluarea gratuită a cazului tău',
-          subtitle: 'Trimite doar informațiile necesare. Îți răspundem cu un prim pas clar.',
+          subtitle: 'Trimite datele de bază și documentul. Specialistul îți va răspunde cu următorul pas clar.',
+          selectedExpert: 'Întrebare pentru specialist',
           name: 'Nume și prenume',
           nameHint: 'opțional',
-          phone: 'Telefon / WhatsApp',
+          phone: 'Contact / număr WhatsApp',
           phoneHint: 'important pentru un răspuns rapid',
-          email: 'E-mail',
-          emailHint: 'pentru confirmarea cererii',
-          language: 'Limba de comunicare',
-          problem: 'Tipul problemei',
+          email: 'E-mail pentru confirmare',
+          problem: 'Subiect',
           chooseProblem: 'Alege tema',
           unsure: 'Nu sunt sigur / altceva',
           description: 'Descriere scurtă',
-          descriptionPlaceholder: 'Într-o sau două propoziții, spune-ne ce te îngrijorează…',
-          document: 'Fotografia scrisorii sau documentului',
+          descriptionPlaceholder: 'Ce s-a întâmplat? Scrie pe scurt…',
+          document: 'Document sau fotografie a scrisorii',
           camera: 'Fă o fotografie sau alege documentul',
           changeFile: 'Schimbă documentul',
           fileHint: 'Pe telefon poți deschide direct camera.',
           consent: 'Sunt de acord să fiu contactat în legătură cu această solicitare.',
-          submit: 'Trimite pentru analiză gratuită',
-          sending: 'Trimitem solicitarea…',
-          security: 'Documentele sunt verificate doar de echipa noastră autorizată. Nu trimite mai multe date personale decât este necesar.',
+          submit: 'Cere oferta specialistului',
+          sending: 'Trimitem întrebarea…',
+          security: 'Documentul este verificat doar de echipa noastră. Nu trimite mai multe date personale decât este necesar.',
+          disclaimer: 'Fără costuri ascunse. Îți comunicăm prețul fix al soluției înainte să plătești ceva.',
           close: 'Închide',
           missingFile: 'Adaugă mai întâi o fotografie sau un PDF.',
-          missingBasics: 'Introdu e-mailul și telefonul, acceptă contactul și adaugă documentul.',
+          missingBasics: 'Introdu e-mailul și numărul WhatsApp, acceptă contactul și adaugă documentul.',
           invalidFile: 'Alege un document PDF, JPG sau PNG.',
           tooLarge: 'Documentul este prea mare. Dimensiunea maximă este de 3 MB.',
-          success: 'Solicitarea a fost primită. Am trimis confirmarea pe e-mail.',
-          error: 'Momentan nu putem trimite solicitarea. Încearcă din nou sau contactează-ne direct.'
+          success: 'Întrebarea a fost primită. Am trimis confirmarea pe e-mail.',
+          error: 'Momentan nu putem trimite întrebarea. Încearcă din nou.'
+        },
+        chat: {
+          title: 'Cunoscătorul digital',
+          status: 'Răspunde imediat',
+          heroQuestion: 'Ai o întrebare simplă? Întreabă asistentul nostru digital.',
+          mockUser: 'Am nevoie de traducător autorizat pentru cererea la OAMP?',
+          answer: 'Pentru cererile de bază nu este necesar un traducător autorizat în fiecare situație, dar totul depinde de document și de instrucțiunile OAMP. Dacă scrisoarea oficială cere o traducere autorizată sau completări, specialiștii noștri o pot verifica gratuit.',
+          sendToExpert: 'Trimite scrisoarea specialistului',
+          inputPlaceholder: 'Scrie întrebarea ta…',
+          send: 'Trimite',
+          close: 'Închide asistentul',
+          disclaimer: 'AI oferă informații generale, nu consultanță juridică.'
         },
         footer: {
-          title: 'Ajutorul începe prin a înțelege problema.',
-          disclaimer: 'Notă legală: Oferim asistență administrativă, de traducere și asistență în cadrul unei activități independente (živnost volná). Nu suntem cabinet de avocatură și nu suntem consultanți fiscali (daňoví poradci). Informațiile sunt generale și nu înlocuiesc consultanța juridică sau fiscală individuală.',
+          title: 'O problemă. Un următor pas clar.',
+          disclaimer: 'Notă legală: Oferim asistență administrativă, de traducere și asistență în cadrul unei activități independente (živnost volná). Nu suntem cabinet de avocatură și nu suntem consultanți fiscali. Informațiile sunt generale și nu înlocuiesc consultanța juridică sau fiscală individuală.',
           demo: 'Versiune demo · 2026'
         }
       }
     };
 
-    const problems = [
+    const experts = [
       {
-        id: 'letter', icon: 'MailWarning', tone: 'amber',
-        exyu: { title: 'Pismo od úřada / Datová schránka', tag: 'Rokovi', info: 'Kod datové schránke se pod određenim uvjetima poruka smatra dostavljenom nakon 10 dana. Rok za žalbu nije uvijek isti — često je 8 ili 15 dana — zato treba provjeriti baš tvoje pismo.', action: 'Slikaj pismo i pošalji ga na hitnu provjeru.' },
-        ro: { title: 'Scrisoare de la úřad / Datová schránka', tag: 'Termene', info: 'În anumite condiții, un mesaj din datová schránka este considerat livrat după 10 zile. Termenul pentru contestație nu este mereu același — adesea 8 sau 15 zile — de aceea trebuie verificată scrisoarea ta.', action: 'Fotografiază scrisoarea și trimite-o pentru verificare urgentă.' }
+        id: 'jelena',
+        name: 'Jelena M.',
+        avatar: 'https://i.pravatar.cc/96?img=47',
+        initials: 'JM',
+        tone: 'bg-rose-100 text-rose-700',
+        exyu: { badge: 'Verificirani prevoditelj', specialization: 'Vize, VZP, OAMP', bio: 'Pomaže ljudima razumjeti službena pisma i pripremiti dokumente.' },
+        ro: { badge: 'Traducător verificat', specialization: 'Vize, VZP, OAMP', bio: 'Ajută oamenii să înțeleagă scrisorile oficiale și să pregătească documentele.' }
       },
       {
-        id: 'deposit', icon: 'KeyRound', tone: 'rose',
-        exyu: { title: 'Stanodavac i kaucija (najam)', tag: 'Novac', info: 'Kod povrata kaucije i obračuna režija važno je pogledati ugovor i pisani obračun (vyúčtování). Traži objašnjenje stvarnih troškova i čuvaj svu komunikaciju.', action: 'Gazda ti ne vraća novac? Pomoći ćemo sastaviti službeni dopis.' },
-        ro: { title: 'Proprietar și garanție (chirie)', tag: 'Bani', info: 'Pentru restituirea garanției și decontul utilităților trebuie verificate contractul și documentul vyúčtování. Cere explicații pentru costurile reale și păstrează comunicarea în scris.', action: 'Proprietarul nu îți restituie banii? Te ajutăm cu o scrisoare oficială.' }
+        id: 'marko',
+        name: 'Marko P.',
+        avatar: 'https://i.pravatar.cc/96?img=12',
+        initials: 'MP',
+        tone: 'bg-blue-100 text-trust-700',
+        exyu: { badge: 'Administrativna podrška', specialization: 'OSVČ, Bolt, stanovanje', bio: 'Pomaže vozačima, OSVČ osobama i najmoprimcima u svakodnevnoj administraciji.' },
+        ro: { badge: 'Asistență administrativă', specialization: 'OSVČ, Bolt, chirii', bio: 'Ajută șoferii, persoanele OSVČ și chiriașii cu administrația de zi cu zi.' }
       },
       {
-        id: 'health', icon: 'HeartPulse', tone: 'red',
-        exyu: { title: 'Zdravstveno (VZP/pVZP) i dugovi', tag: 'Zdravlje', info: 'Nakon promjene posla ili statusa treba provjeriti tko plaća osiguranje i od kojeg datuma. Rok i postupak ovise o tvojoj situaciji — što prije provjeri VZP/pVZP, manje je iznenađenja.', action: 'Imaš dug ili ne možeš naći doktora? Provjerimo tvoj status.' },
-        ro: { title: 'Asigurare medicală (VZP/pVZP) și datorii', tag: 'Sănătate', info: 'După schimbarea locului de muncă sau a statutului trebuie verificat cine plătește asigurarea și de la ce dată. Termenul și procedura depind de situația ta — verifică VZP/pVZP cât mai repede.', action: 'Ai datorii sau nu găsești medic? Verificăm statutul tău.' }
-      },
-      {
-        id: 'work', icon: 'BriefcaseBusiness', tone: 'blue',
-        exyu: { title: 'Posao, agencija i neisplaćena plaća', tag: 'Posao', info: 'Traži platnu listu (výplatní páska) i provjeri svaku stavku. Odbici trebaju imati jasan osnov. Ako poslodavac ode u stečaj, može postojati postupak preko Úřada práce.', action: 'Imaš problem na poslu? Provjerimo ugovor i platnu listu.' },
-        ro: { title: 'Muncă, agenție și salariu neplătit', tag: 'Muncă', info: 'Cere fluturașul de salariu (výplatní páska) și verifică fiecare poziție. Reținerile trebuie să aibă o bază clară. Dacă angajatorul intră în insolvență, poate exista o procedură prin Úřad práce.', action: 'Ai o problemă la muncă? Verificăm contractul și fluturașul.' }
-      },
-      {
-        id: 'family', icon: 'Baby', tone: 'violet',
-        exyu: { title: 'Rodilo se dijete u Češkoj', tag: 'Obitelj', info: 'Obaveze za osiguranje, boravak i dokumente ovise o državljanstvu i statusu roditelja. Često se spominju rokovi od 8 i 60 dana, ali ih treba potvrditi kod VZP-a i OAMP-a za tvoju situaciju.', action: 'Preuzmi vodič ili prepusti birokraciju nama.' },
-        ro: { title: 'S-a născut un copil în Cehia', tag: 'Familie', info: 'Obligațiile pentru asigurare, ședere și documente depind de cetățenia și statutul părinților. Sunt menționate frecvent termene de 8 și 60 de zile, dar trebuie confirmate la VZP și OAMP pentru situația ta.', action: 'Descarcă ghidul sau lasă-ne pe noi să ne ocupăm.' }
-      },
-      {
-        id: 'osvc', icon: 'CarFront', tone: 'emerald',
-        exyu: { title: 'OSVČ / vozači (Bolt, Wolt, paušal)', tag: 'Porezi', info: 'Za vozače je važno uredno voditi evidenciju, pratiti zálohy i čitati poruke u datovoj schránki. Obaveze i kazne ovise o vrsti djelatnosti i tvom poreznom režimu.', action: 'Trebaju ti čisti papiri bez stresa? Javi se za administrativnu podršku.' },
-        ro: { title: 'OSVČ / șoferi (Bolt, Wolt, regim paușal)', tag: 'Taxe', info: 'Pentru șoferi este importantă evidența corectă, urmărirea záloh și citirea mesajelor din datová schránka. Obligațiile și amenzile depind de activitate și regimul fiscal.', action: 'Vrei documente în ordine fără stres? Cere suport administrativ.' }
+        id: 'nikola',
+        name: 'Nikola R.',
+        avatar: 'https://i.pravatar.cc/96?img=68',
+        initials: 'NR',
+        tone: 'bg-emerald-100 text-safe-700',
+        exyu: { badge: 'Stručnjak za radne dopise', specialization: 'Posao, agencije, plaće', bio: 'Pomaže provjeriti ugovore, platne liste i komunikaciju s agencijama.' },
+        ro: { badge: 'Specialist în documente de muncă', specialization: 'Muncă, agenții, salarii', bio: 'Ajută la verificarea contractelor, fluturașilor și comunicării cu agențiile.' }
       }
     ];
 
-    const boardPosts = [
-      { id: 1, category: 'job', icon: 'HardHat', tone: 'blue', exyu: { title: 'Vozač za dostavu traži smjenu u Pardubicama', meta: 'Posao · Pardubice', text: 'Dostava ili skladište, iskustvo i češki na osnovnoj razini.' }, ro: { title: 'Șofer pentru livrări caută tură în Pardubice', meta: 'Locuri de muncă · Pardubice', text: 'Livrări sau depozit, experiență și limba cehă la nivel de bază.' } },
-      { id: 2, category: 'housing', icon: 'House', tone: 'emerald', exyu: { title: 'Tražim garsonijeru blizu Hradca', meta: 'Stanovi · Hradec Králové', text: 'Mirna osoba, dugoročni najam, moguća preporuka poslodavca.' }, ro: { title: 'Caut o garsonieră aproape de Hradec', meta: 'Cazare · Hradec Králové', text: 'Persoană liniștită, chirie pe termen lung, recomandare de la angajator.' } },
-      { id: 3, category: 'courses', icon: 'Languages', tone: 'amber', exyu: { title: 'Tečaj češkog jezika za početnike', meta: 'Tečajevi jezika · online', text: 'Praktične fraze za posao, liječnika i razgovor na úřadu.' }, ro: { title: 'Curs de limba cehă pentru începători', meta: 'Cursuri de limbă · online', text: 'Expresii practice pentru muncă, medic și discuții la úřad.' } }
+    const problems = [
+      {
+        id: 'letter', icon: 'MailWarning', tone: 'amber', expertIds: ['jelena', 'nikola'],
+        exyu: { title: 'Pismo od úřada / Datová schránka', tag: 'Rokovi', info: 'Kod datové schránke se pod određenim uvjetima poruka smatra dostavljenom nakon 10 dana. Rok za žalbu nije uvijek isti, zato treba provjeriti baš tvoje pismo.', action: 'Pošalji pismo da vidimo što traži úřad.' },
+        ro: { title: 'Scrisoare de la úřad / Datová schránka', tag: 'Termene', info: 'În anumite condiții, un mesaj din datová schránka este considerat livrat după 10 zile. Termenul pentru contestație nu este mereu același, de aceea trebuie verificată scrisoarea ta.', action: 'Trimite scrisoarea ca să vedem ce cere úřad.' }
+      },
+      {
+        id: 'deposit', icon: 'KeyRound', tone: 'rose', expertIds: ['marko'],
+        exyu: { title: 'Stanodavac i kaucija', tag: 'Najam', info: 'Kod povrata kaucije i obračuna režija važno je pogledati ugovor i pisani obračun (vyúčtování). Traži objašnjenje stvarnih troškova i čuvaj komunikaciju.', action: 'Gazda ne vraća novac? Pomoći ćemo sastaviti službeni dopis.' },
+        ro: { title: 'Proprietar și garanție', tag: 'Chirie', info: 'Pentru restituirea garanției și decontul utilităților trebuie verificate contractul și documentul vyúčtování. Cere explicații pentru costurile reale și păstrează comunicarea în scris.', action: 'Proprietarul nu restituie banii? Te ajutăm cu o scrisoare oficială.' }
+      },
+      {
+        id: 'health', icon: 'HeartPulse', tone: 'red', expertIds: ['jelena'],
+        exyu: { title: 'Zdravstveno (VZP) i dugovi', tag: 'Zdravlje', info: 'Nakon promjene posla ili statusa često treba provjeriti osiguranje u kratkom roku, ponekad 8 dana. Točan rok ovisi o tvojoj situaciji — provjeri VZP prije nego nastane dug.', action: 'Trebate pomoć? Besplatno provjerimo tvoj status.' },
+        ro: { title: 'Asigurare medicală (VZP) și datorii', tag: 'Sănătate', info: 'După schimbarea locului de muncă sau a statutului trebuie verificată asigurarea într-un termen scurt, uneori 8 zile. Termenul exact depinde de situație — verifică VZP înainte să apară datorii.', action: 'Ai nevoie de ajutor? Verificăm gratuit statutul tău.' }
+      },
+      {
+        id: 'work', icon: 'BriefcaseBusiness', tone: 'blue', expertIds: ['nikola'],
+        exyu: { title: 'Posao i neisplaćena plaća', tag: 'Posao', info: 'Traži platnu listu (výplatní páska) i provjeri svaku stavku. Odbici trebaju imati jasan osnov. Sačuvaj ugovor, raspored i poruke.', action: 'Provjerimo ugovor, platnu listu i sljedeći korak.' },
+        ro: { title: 'Muncă și salariu neplătit', tag: 'Muncă', info: 'Cere fluturașul de salariu (výplatní páska) și verifică fiecare poziție. Reținerile trebuie să aibă o bază clară. Păstrează contractul și mesajele.', action: 'Verificăm contractul, fluturașul și următorul pas.' }
+      },
+      {
+        id: 'family', icon: 'Baby', tone: 'violet', expertIds: ['jelena'],
+        exyu: { title: 'Rođenje djeteta i OAMP', tag: 'Obitelj', info: 'Obaveze za osiguranje, boravak i dokumente ovise o statusu roditelja i djeteta. Često se spominju rokovi od 8 i 60 dana, ali ih treba potvrditi za tvoju situaciju.', action: 'Dobij vodič ili pošalji dokument stručnjaku.' },
+        ro: { title: 'Nașterea copilului și OAMP', tag: 'Familie', info: 'Obligațiile pentru asigurare, ședere și documente depind de statutul părinților și al copilului. Sunt menționate frecvent termene de 8 și 60 de zile, dar trebuie confirmate pentru situația ta.', action: 'Primește un ghid sau trimite documentul specialistului.' }
+      },
+      {
+        id: 'osvc', icon: 'CarFront', tone: 'emerald', expertIds: ['marko', 'nikola'],
+        exyu: { title: 'OSVČ (Paušal i Bolt)', tag: 'Porezi', info: 'Za vozače je važno voditi evidenciju, pratiti zálohy i čitati poruke u datovoj schránki. Obaveze ovise o djelatnosti i poreznom režimu.', action: 'Trebaš čiste papire bez stresa? Zatraži administrativnu podršku.' },
+        ro: { title: 'OSVČ (Paușal și Bolt)', tag: 'Taxe', info: 'Pentru șoferi este importantă evidența, urmărirea záloh și citirea mesajelor din datová schránka. Obligațiile depind de activitate și regimul fiscal.', action: 'Vrei documente în ordine fără stres? Cere suport administrativ.' }
+      }
     ];
 
     function Icon({ name, className = 'h-5 w-5' }) {
@@ -290,28 +354,35 @@
       const [lang, setLang] = useState('exyu');
       const c = copy[lang];
       const [intakeOpen, setIntakeOpen] = useState(false);
+      const [accessOpen, setAccessOpen] = useState(false);
+      const [chatOpen, setChatOpen] = useState(false);
+      const [chatDraft, setChatDraft] = useState('');
+      const [chatQuestion, setChatQuestion] = useState('');
+      const [chatAsked, setChatAsked] = useState(false);
       const [expanded, setExpanded] = useState(null);
-      const [boardFilter, setBoardFilter] = useState('all');
       const [file, setFile] = useState(null);
       const [drag, setDrag] = useState(false);
       const [submission, setSubmission] = useState({ state: 'idle', message: '' });
-      const [form, setForm] = useState({ name: '', email: '', phone: '', communication: 'exyu', problem: '', description: '', consent: false });
+      const [form, setForm] = useState({ name: '', email: '', phone: '', problem: '', description: '', expert: '', consent: false });
       const input = useRef(null);
 
       useEffect(() => {
         document.documentElement.lang = lang === 'ro' ? 'ro' : 'hr';
       }, [lang]);
 
-      const currentCard = card => card[lang];
-      const selectedProblemTitle = form.problem ? (problems.find(problem => problem.id === form.problem)?.[lang]?.title || form.problem) : '';
       const updateField = (field, value) => setForm(previous => ({ ...previous, [field]: value }));
       const changeLanguage = nextLanguage => {
         setLang(nextLanguage);
-        updateField('communication', nextLanguage === 'ro' ? 'ro' : 'exyu');
+        setChatAsked(false);
+        setChatQuestion('');
       };
+      const currentProblem = problems.find(problem => problem.id === form.problem);
+      const selectedProblemTitle = currentProblem?.[lang]?.title || (lang === 'ro' ? 'Altă situație' : 'Druga situacija');
+      const selectedExpert = experts.find(expert => expert.id === form.expert);
+      const expertById = id => experts.find(expert => expert.id === id);
 
-      const openIntake = (problemId = '') => {
-        updateField('problem', problemId);
+      const openIntake = (problemId = '', expertId = '') => {
+        setForm(previous => ({ ...previous, problem: problemId || previous.problem, expert: expertId || previous.expert }));
         setSubmission({ state: 'idle', message: '' });
         setIntakeOpen(true);
       };
@@ -357,11 +428,11 @@
             body: JSON.stringify({
               source: 'balkancz-vercel-demo',
               language: lang,
-              communication_language: form.communication,
               submitted_at: new Date().toISOString(),
               client: { name: form.name.trim(), email: form.email.trim(), phone: form.phone.trim() },
-              problem: selectedProblemTitle || (lang === 'ro' ? 'Evaluarea unui document oficial' : 'Procjena službenog dokumenta'),
+              problem: selectedProblemTitle,
               problem_id: form.problem || 'other',
+              expert: selectedExpert?.name || '',
               description: form.description.trim(),
               consent: form.consent,
               document: { filename: file.name, mime_type: file.type, size_bytes: file.size, data_url: dataUrl }
@@ -375,7 +446,13 @@
         }
       };
 
-      const filteredPosts = boardPosts.filter(post => boardFilter === 'all' || post.category === boardFilter);
+      const askChat = question => {
+        const nextQuestion = (question || '').trim() || c.chat.mockUser;
+        setChatQuestion(nextQuestion);
+        setChatAsked(true);
+        setChatOpen(true);
+      };
+
       const toneClasses = {
         amber: 'bg-amber-50 text-amber-700 border-amber-200',
         rose: 'bg-rose-50 text-rose-700 border-rose-200',
@@ -392,20 +469,20 @@
           <header className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/95 backdrop-blur">
             <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
               <a href="#top" className="flex min-w-0 items-center gap-2.5" aria-label={c.brand}>
-                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-trust-600 text-lg font-black text-white shadow-sm">A</div>
+                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-trust-600 text-lg font-black text-white shadow-sm">B</div>
                 <div className="min-w-0"><div className="truncate font-extrabold tracking-tight text-slate-950">{c.brand}</div><div className="truncate text-[10px] font-medium text-slate-500 sm:text-xs">{c.brandSub}</div></div>
               </a>
               <nav className="hidden items-center gap-6 text-sm font-semibold text-slate-600 md:flex" aria-label="Main navigation">
-                <a href="#situacije" className="transition hover:text-trust-600">{c.nav.situations}</a>
-                <a href="#kako" className="transition hover:text-trust-600">{c.nav.how}</a>
-                <a href="#zajednica" className="transition hover:text-trust-600">{c.nav.board}</a>
+                <a href="#situacije" className="transition hover:text-trust-600">{c.nav.problems}</a>
+                <a href="#strucnjaci" className="transition hover:text-trust-600">{c.nav.experts}</a>
+                <a href="#asistent" className="transition hover:text-trust-600">{c.nav.assistant}</a>
               </nav>
               <div className="flex shrink-0 items-center gap-2">
                 <div className="flex items-center rounded-full border border-slate-200 bg-slate-100 p-1 text-xs font-bold" role="group" aria-label="Language switcher">
                   <button type="button" onClick={() => changeLanguage('exyu')} aria-pressed={lang === 'exyu'} className={cx('rounded-full px-2.5 py-1.5 transition sm:px-3', lang === 'exyu' ? 'bg-white text-trust-700 shadow-sm' : 'text-slate-500 hover:text-slate-800')}>🇧🇦 🇭🇷 <span className="hidden sm:inline">Ex-Yu</span></button>
                   <button type="button" onClick={() => changeLanguage('ro')} aria-pressed={lang === 'ro'} className={cx('rounded-full px-2.5 py-1.5 transition sm:px-3', lang === 'ro' ? 'bg-white text-trust-700 shadow-sm' : 'text-slate-500 hover:text-slate-800')}>🇷🇴 <span className="hidden sm:inline">Română</span></button>
                 </div>
-                <button type="button" onClick={() => openIntake()} className="hidden items-center gap-2 rounded-xl bg-amber-500 px-3 py-2.5 text-xs font-extrabold text-white shadow-sm transition hover:bg-amber-600 focus:outline-none focus:ring-4 focus:ring-amber-100 sm:inline-flex sm:px-4 sm:text-sm"><Icon name="Siren" className="h-4 w-4" />{c.emergency}</button>
+                <button type="button" onClick={() => setAccessOpen(true)} className="hidden items-center gap-2 rounded-xl bg-trust-600 px-3 py-2.5 text-xs font-extrabold text-white transition hover:bg-trust-700 focus:outline-none focus:ring-4 focus:ring-trust-100 sm:inline-flex sm:px-4 sm:text-sm"><Icon name="LogIn" className="h-4 w-4" />{c.nav.access}</button>
               </div>
             </div>
           </header>
@@ -414,74 +491,72 @@
             <section className="relative overflow-hidden border-b border-amber-100 bg-[#fffaf1]">
               <div className="absolute -right-32 -top-32 h-80 w-80 rounded-full bg-trust-100/70 blur-3xl" />
               <div className="absolute -bottom-40 -left-20 h-80 w-80 rounded-full bg-amber-100/70 blur-3xl" />
-              <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-12 sm:px-6 sm:py-20 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-16 lg:px-8 lg:py-24">
-                <div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-trust-200 bg-white/80 px-3 py-1.5 text-xs font-extrabold text-trust-700 shadow-sm sm:text-sm"><Icon name="HeartHandshake" className="h-4 w-4" />{c.hero.eyebrow}</div>
-                  <h1 className="mt-5 max-w-3xl text-4xl font-black leading-[1.08] tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">{c.hero.title}</h1>
-                  <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">{c.hero.description}</p>
-                  <div className="mt-7 flex flex-wrap gap-2.5">{c.hero.tags.map(tag => <span key={tag} className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 shadow-sm"><Icon name="Check" className="h-3.5 w-3.5 text-safe-600" />{tag}</span>)}</div>
-                  <p className="mt-6 flex items-start gap-2 text-sm font-semibold text-slate-600"><Icon name="Info" className="mt-0.5 h-4 w-4 shrink-0 text-trust-600" />{c.hero.reassurance}</p>
-                </div>
-                <div className="relative">
-                  <div className="absolute -inset-3 rounded-[2rem] bg-trust-100/60 blur-xl" />
-                  <div className={cx('relative rounded-[2rem] border bg-white p-5 shadow-lift sm:p-7', drag ? 'border-trust-600' : 'border-trust-200')} onDragOver={event => { event.preventDefault(); setDrag(true); }} onDragLeave={() => setDrag(false)} onDrop={event => { event.preventDefault(); setDrag(false); pick(event.dataTransfer.files); openIntake(); }}>
-                    <div className="flex items-start gap-4"><div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-trust-600 text-white shadow-lg"><Icon name="FileShield" className="h-7 w-7" /></div><div><p className="text-xs font-extrabold uppercase tracking-[.16em] text-trust-600">{lang === 'ro' ? 'Primul pas' : 'Prvi korak'}</p><h2 className="mt-1 text-2xl font-black leading-tight text-slate-950">{c.hero.cardTitle}</h2></div></div>
-                    <p className="mt-5 leading-7 text-slate-600">{c.hero.cardText}</p>
-                    <button type="button" onClick={() => openIntake()} className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-trust-600 px-5 py-4 text-center text-base font-extrabold text-white shadow-lg shadow-trust-600/20 transition hover:bg-trust-700 focus:outline-none focus:ring-4 focus:ring-trust-100 sm:text-lg"><Icon name="UploadCloud" />{c.hero.cardButton}<Icon name="ArrowRight" className="h-5 w-5" /></button>
-                    <div className="mt-5 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-5 text-center"><p className="text-sm font-bold text-slate-700">{c.hero.dropHint}</p><p className="mt-1 text-xs text-slate-500">{c.hero.fileNote}</p></div>
-                    <p className="mt-4 flex items-center justify-center gap-2 text-center text-xs font-medium text-slate-500"><Icon name="LockKeyhole" className="h-4 w-4 text-safe-600" />{lang === 'ro' ? 'Trimitere sigură către echipa de evaluare' : 'Sigurno slanje timu za procjenu'}</p>
+              <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+                <div className="max-w-3xl"><div className="inline-flex items-center gap-2 rounded-full border border-trust-200 bg-white/80 px-3 py-1.5 text-xs font-extrabold text-trust-700 shadow-sm sm:text-sm"><Icon name="HeartHandshake" className="h-4 w-4" />{c.hero.eyebrow}</div><h1 className="mt-5 text-5xl font-black leading-[1.04] tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">{c.hero.title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">{c.hero.description}</p><div className="mt-7 flex flex-wrap gap-2.5">{c.hero.tags.map(tag => <span key={tag} className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 shadow-sm"><Icon name="Check" className="h-3.5 w-3.5 text-safe-600" />{tag}</span>)}</div><p className="mt-6 flex items-start gap-2 text-sm font-semibold text-slate-600"><Icon name="Info" className="mt-0.5 h-4 w-4 shrink-0 text-trust-600" />{c.hero.reassurance}</p></div>
+
+                <div className="mt-12 grid gap-5 lg:grid-cols-2">
+                  <div className="relative rounded-[2rem] border border-trust-200 bg-white p-5 shadow-lift sm:p-7" onDragOver={event => { event.preventDefault(); setDrag(true); }} onDragLeave={() => setDrag(false)} onDrop={event => { event.preventDefault(); setDrag(false); pick(event.dataTransfer.files); openIntake(); }}>
+                    <div className="flex items-start gap-4"><div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-trust-600 text-white shadow-lg"><Icon name="FileShield" className="h-7 w-7" /></div><div><p className="text-xs font-extrabold uppercase tracking-[.16em] text-trust-600">{c.hero.uploadEyebrow}</p><h2 className="mt-1 text-2xl font-black leading-tight text-slate-950">{c.hero.uploadTitle}</h2></div></div>
+                    <p className="mt-5 leading-7 text-slate-600">{c.hero.uploadText}</p>
+                    <button type="button" onClick={() => openIntake()} className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-trust-600 px-5 py-4 text-center text-base font-extrabold text-white shadow-lg shadow-trust-600/20 transition hover:bg-trust-700 focus:outline-none focus:ring-4 focus:ring-trust-100"><Icon name="Camera" />{c.hero.uploadButton}<Icon name="ArrowRight" className="h-5 w-5" /></button>
+                    <div className={cx('mt-5 rounded-2xl border-2 border-dashed p-5 text-center transition', drag ? 'border-trust-600 bg-trust-50' : 'border-slate-200 bg-slate-50')}><p className="text-sm font-bold text-slate-700">{c.hero.dropHint}</p><p className="mt-1 text-xs text-slate-500">{c.hero.fileNote}</p></div>
+                  </div>
+
+                  <div id="asistent" className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-soft sm:p-7">
+                    <div className="flex items-start gap-4"><div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-violet-50 text-violet-700"><Icon name="Bot" className="h-7 w-7" /></div><div><p className="text-xs font-extrabold uppercase tracking-[.16em] text-violet-700">{c.hero.chatEyebrow}</p><h2 className="mt-1 text-2xl font-black leading-tight text-slate-950">{c.hero.chatTitle}</h2></div></div>
+                    <p className="mt-5 leading-7 text-slate-600">{c.hero.chatText}</p>
+                    <form onSubmit={event => { event.preventDefault(); askChat(chatDraft); }} className="mt-6"><label className="sr-only" htmlFor="hero-chat-question">{c.chat.inputPlaceholder}</label><div className="flex items-center gap-2 rounded-2xl border border-slate-300 bg-slate-50 p-2 focus-within:border-trust-500 focus-within:ring-4 focus-within:ring-trust-100"><input id="hero-chat-question" value={chatDraft} onChange={event => setChatDraft(event.target.value)} className="min-w-0 flex-1 bg-transparent px-2 text-sm outline-none" placeholder={c.hero.chatPlaceholder} /><button type="submit" aria-label={c.chat.send} className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-trust-600 text-white transition hover:bg-trust-700"><Icon name="Send" className="h-4 w-4" /></button></div></form>
+                    <button type="button" onClick={() => askChat(chatDraft)} className="mt-4 inline-flex items-center gap-2 text-sm font-extrabold text-trust-700 hover:text-trust-900"><Icon name="MessageCircle" className="h-4 w-4" />{c.hero.chatButton}<Icon name="ArrowRight" className="h-4 w-4" /></button>
                   </div>
                 </div>
               </div>
             </section>
 
-            <section id="kako" className="border-b border-slate-200 bg-white">
-              <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-                <div className="max-w-2xl"><p className="text-sm font-extrabold uppercase tracking-[.16em] text-trust-600">{c.how.eyebrow}</p><h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">{c.how.title}</h2><p className="mt-4 text-lg leading-7 text-slate-600">{c.how.lead}</p></div>
-                <div className="mt-10 grid gap-5 lg:grid-cols-3">{c.how.steps.map(([number, title, text, icon]) => <article key={number} className="rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-sm sm:p-7"><div className="flex items-center justify-between"><div className="grid h-12 w-12 place-items-center rounded-2xl bg-trust-50 text-trust-600"><Icon name={icon} /></div><span className="text-5xl font-black text-slate-200">{number}</span></div><h3 className="mt-6 text-xl font-extrabold text-slate-950">{title}</h3><p className="mt-3 leading-7 text-slate-600">{text}</p></article>)}</div>
-              </div>
-            </section>
-
             <section id="situacije" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
               <div className="max-w-3xl"><p className="text-sm font-extrabold uppercase tracking-[.16em] text-trust-600">{c.problems.eyebrow}</p><h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">{c.problems.title}</h2><p className="mt-4 text-lg leading-7 text-slate-600">{c.problems.lead}</p></div>
-              <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{problems.map(problem => { const item = problem[lang]; const isOpen = expanded === problem.id; return <article key={problem.id} className={cx('rounded-3xl border bg-white p-5 shadow-soft transition sm:p-6', isOpen ? 'border-trust-300 ring-4 ring-trust-50 md:col-span-2 lg:col-span-2' : 'border-slate-200 hover:-translate-y-0.5 hover:border-trust-200')}>
+              <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{problems.map(problem => { const item = problem[lang]; const isOpen = expanded === problem.id; const cardExperts = problem.expertIds.map(expertById).filter(Boolean); return <article key={problem.id} className={cx('rounded-3xl border bg-white p-5 shadow-soft transition sm:p-6', isOpen ? 'border-trust-300 ring-4 ring-trust-50 md:col-span-2 lg:col-span-2' : 'border-slate-200 hover:-translate-y-0.5 hover:border-trust-200')}>
                 <button type="button" onClick={() => setExpanded(isOpen ? null : problem.id)} className="flex w-full items-start gap-4 text-left focus:outline-none focus:ring-4 focus:ring-trust-100"><div className={cx('grid h-12 w-12 shrink-0 place-items-center rounded-2xl border', toneClasses[problem.tone])}><Icon name={problem.icon} /></div><div className="min-w-0 flex-1"><div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide text-slate-600">{item.tag}</span>{isOpen && <span className="text-xs font-bold text-trust-600">{c.problems.close}</span>}</div><h3 className="mt-2 text-lg font-extrabold leading-6 text-slate-950">{item.title}</h3></div><Icon name={isOpen ? 'ChevronUp' : 'ChevronDown'} className="mt-2 h-5 w-5 shrink-0 text-slate-400" /></button>
-                {isOpen && <div className="mt-5 border-t border-slate-100 pt-5 md:ml-16"><div className="flex items-start gap-3 rounded-2xl bg-slate-50 p-4"><Icon name="BookOpen" className="mt-0.5 h-5 w-5 shrink-0 text-trust-600" /><p className="text-sm leading-6 text-slate-700">{item.info}</p></div><p className="mt-4 text-sm font-bold leading-6 text-slate-800">{item.action}</p><button type="button" onClick={() => openIntake(problem.id)} className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-xl bg-trust-600 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-trust-700 focus:outline-none focus:ring-4 focus:ring-trust-100"><Icon name="MessageCircle" className="h-4 w-4" />{c.problems.action}</button><p className="mt-4 text-xs leading-5 text-slate-500">{c.problems.note}</p></div>}
+                {isOpen && <div className="mt-5 border-t border-slate-100 pt-5 md:ml-16"><div className="rounded-2xl bg-slate-50 p-4"><div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wide text-trust-700"><Icon name="Lightbulb" className="h-4 w-4" />{c.problems.quickInfo}</div><p className="mt-2 text-sm leading-6 text-slate-700">{item.info}</p></div><p className="mt-4 text-sm font-bold leading-6 text-slate-800">{item.action}</p><p className="mt-5 text-xs font-extrabold uppercase tracking-wide text-slate-500">{c.problems.experts}</p><div className="mt-2 flex flex-wrap gap-2">{cardExperts.map(expert => <button key={expert.id} type="button" onClick={() => openIntake(problem.id, expert.id)} className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 transition hover:border-trust-300 hover:text-trust-700"><span className={cx('grid h-6 w-6 place-items-center rounded-full text-[10px] font-black', expert.tone)}>{expert.initials}</span>{expert.name}<Icon name="BadgeCheck" className="h-3.5 w-3.5 text-trust-600" /></button>)}</div><div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center"><button type="button" onClick={() => openIntake(problem.id)} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-trust-600 px-5 py-3 text-sm font-extrabold text-white transition hover:bg-trust-700 focus:outline-none focus:ring-4 focus:ring-trust-100"><Icon name="MessageCircle" className="h-4 w-4" />{c.problems.action}</button><span className="text-xs leading-5 text-slate-500">{c.problems.note}</span></div></div>}
               </article>; })}</div>
             </section>
 
-            <section id="zajednica" className="border-y border-amber-200 bg-[#fffdf4]">
+            <section id="strucnjaci" className="border-y border-slate-200 bg-white">
               <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-                <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-sm font-extrabold uppercase tracking-[.16em] text-amber-700">{c.board.eyebrow}</p><h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">{c.board.title}</h2></div><div className="max-w-xl rounded-2xl border border-amber-300 bg-amber-100/70 p-4 text-sm font-bold leading-6 text-amber-950"><Icon name="Megaphone" className="mb-1 inline-block h-4 w-4" /> {c.board.notice}</div></div>
-                <div className="scrollbar-hide mt-8 flex gap-2 overflow-x-auto pb-2">{c.board.filters.map(([id, label]) => <button type="button" key={id} onClick={() => setBoardFilter(id)} aria-pressed={boardFilter === id} className={cx('shrink-0 rounded-full border px-4 py-2.5 text-sm font-extrabold transition', boardFilter === id ? 'border-trust-600 bg-trust-600 text-white' : 'border-slate-300 bg-white text-slate-700 hover:border-trust-300 hover:text-trust-700')}>{label}</button>)}</div>
-                <div className="mt-7 grid gap-4 md:grid-cols-3">{filteredPosts.map(post => { const item = post[lang]; return <article key={post.id} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-soft"><div className="flex items-start justify-between gap-3"><div className={cx('grid h-11 w-11 place-items-center rounded-2xl', post.tone === 'blue' ? 'bg-trust-50 text-trust-600' : post.tone === 'emerald' ? 'bg-safe-50 text-safe-700' : 'bg-amber-50 text-amber-700')}><Icon name={post.icon} /></div><span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wide text-slate-500">{c.board.sample}</span></div><h3 className="mt-5 text-lg font-extrabold leading-6 text-slate-950">{item.title}</h3><p className="mt-2 text-xs font-bold text-trust-600">{item.meta}</p><p className="mt-3 text-sm leading-6 text-slate-600">{item.text}</p></article>; })}</div>
+                <div className="max-w-3xl"><p className="text-sm font-extrabold uppercase tracking-[.16em] text-trust-600">{c.directory.eyebrow}</p><h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">{c.directory.title}</h2><p className="mt-4 text-lg leading-7 text-slate-600">{c.directory.lead}</p></div>
+                <div className="scrollbar-hide mt-10 flex gap-5 overflow-x-auto pb-4 lg:grid lg:grid-cols-3 lg:overflow-visible">{experts.map(expert => { const item = expert[lang]; return <article key={expert.id} className="min-w-[290px] rounded-3xl border border-slate-200 bg-slate-50 p-5 shadow-soft sm:p-6 lg:min-w-0"><div className="flex items-start gap-4"><div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl"><img src={expert.avatar} alt={expert.name} className="h-full w-full object-cover" onError={event => { event.currentTarget.style.display = 'none'; if (event.currentTarget.nextElementSibling) event.currentTarget.nextElementSibling.style.display = 'grid'; }} /><div className={cx('hidden h-full w-full place-items-center text-lg font-black', expert.tone)}>{expert.initials}</div></div><div className="min-w-0 flex-1"><h3 className="text-lg font-extrabold text-slate-950">{expert.name}</h3><div className="mt-1 flex items-center gap-1 text-xs font-bold text-trust-700"><Icon name="BadgeCheck" className="h-3.5 w-3.5" />{c.directory.verified}</div></div></div><p className="mt-5 text-sm font-extrabold text-slate-800">{item.badge}</p><p className="mt-1 text-sm font-bold text-trust-700">{item.specialization}</p><p className="mt-3 text-sm leading-6 text-slate-600">{item.bio}</p><button type="button" onClick={() => openIntake('', expert.id)} className="mt-5 flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-trust-200 bg-white px-4 py-3 text-sm font-extrabold text-trust-700 transition hover:bg-trust-50"><Icon name="Send" className="h-4 w-4" />{c.directory.ask} {expert.name}</button></article>; })}</div>
               </div>
             </section>
           </main>
 
-          <footer className="bg-slate-950 text-slate-300"><div className="mx-auto flex max-w-7xl flex-col gap-7 px-4 py-12 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:px-8"><div className="max-w-3xl"><div className="flex items-center gap-3"><div className="grid h-10 w-10 place-items-center rounded-2xl bg-trust-600 font-black text-white">A</div><span className="font-extrabold text-white">{c.brand}</span></div><h2 className="mt-6 text-xl font-extrabold text-white">{c.footer.title}</h2><p className="mt-3 text-sm leading-7 text-slate-400">{c.footer.disclaimer}</p></div><p className="shrink-0 text-xs font-semibold text-slate-500">{c.footer.demo}</p></div></footer>
+          <footer className="bg-slate-950 text-slate-300"><div className="mx-auto flex max-w-7xl flex-col gap-7 px-4 py-12 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:px-8"><div className="max-w-3xl"><div className="flex items-center gap-3"><div className="grid h-10 w-10 place-items-center rounded-2xl bg-trust-600 font-black text-white">B</div><span className="font-extrabold text-white">{c.brand}</span></div><h2 className="mt-6 text-xl font-extrabold text-white">{c.footer.title}</h2><p className="mt-3 text-sm leading-7 text-slate-400">{c.footer.disclaimer}</p></div><p className="shrink-0 text-xs font-semibold text-slate-500">{c.footer.demo}</p></div></footer>
 
-          <button type="button" onClick={() => openIntake()} className="fixed bottom-4 right-4 z-20 inline-flex items-center gap-2 rounded-full bg-amber-500 px-4 py-3 text-sm font-extrabold text-white shadow-xl shadow-amber-500/20 transition hover:bg-amber-600 focus:outline-none focus:ring-4 focus:ring-amber-100 sm:hidden"><Icon name="Siren" className="h-4 w-4" />{c.emergency}</button>
+          {chatOpen && <div className="fixed bottom-24 right-4 z-40 w-[calc(100vw-2rem)] max-w-sm overflow-hidden rounded-3xl border border-trust-200 bg-white shadow-2xl sm:bottom-24 sm:right-6" role="dialog" aria-label={c.chat.title}><div className="flex items-center justify-between bg-trust-600 px-4 py-4 text-white"><div className="flex items-center gap-3"><div className="grid h-10 w-10 place-items-center rounded-2xl bg-white/15"><Icon name="Bot" /></div><div><p className="font-extrabold">{c.chat.title}</p><p className="text-xs text-trust-100">{c.chat.status}</p></div></div><button type="button" onClick={() => setChatOpen(false)} aria-label={c.chat.close} className="rounded-lg p-2 text-trust-100 hover:bg-white/10 hover:text-white"><Icon name="X" /></button></div><div className="max-h-[55vh] space-y-4 overflow-y-auto bg-slate-50 p-4"><div className="ml-8 rounded-2xl rounded-tr-sm bg-trust-600 p-3 text-sm leading-6 text-white">{chatAsked ? chatQuestion : c.chat.mockUser}</div><div className="mr-4 rounded-2xl rounded-tl-sm border border-slate-200 bg-white p-3 text-sm leading-6 text-slate-700 shadow-sm">{c.chat.answer}</div><button type="button" onClick={() => { setChatOpen(false); openIntake(); }} className="flex w-full items-center justify-center gap-2 rounded-xl border border-trust-200 bg-white px-4 py-3 text-sm font-extrabold text-trust-700 transition hover:bg-trust-50"><Icon name="FileCheck2" className="h-4 w-4" />{c.chat.sendToExpert}</button><p className="text-center text-[11px] leading-5 text-slate-500">{c.chat.disclaimer}</p></div><form onSubmit={event => { event.preventDefault(); askChat(chatDraft); }} className="flex gap-2 border-t border-slate-200 bg-white p-3"><input value={chatDraft} onChange={event => setChatDraft(event.target.value)} className="min-w-0 flex-1 rounded-xl border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder={c.chat.inputPlaceholder} /><button type="submit" aria-label={c.chat.send} className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-trust-600 text-white hover:bg-trust-700"><Icon name="Send" className="h-4 w-4" /></button></form></div>}
+
+          <button type="button" onClick={() => setChatOpen(previous => !previous)} aria-label={chatOpen ? c.chat.close : c.chat.title} className="fixed bottom-5 right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-trust-600 text-white shadow-xl shadow-trust-600/30 transition hover:scale-105 hover:bg-trust-700 focus:outline-none focus:ring-4 focus:ring-trust-100 sm:bottom-6 sm:right-6"><Icon name={chatOpen ? 'X' : 'MessageCircle'} className="h-6 w-6" /></button>
 
           {intakeOpen && <Modal titleId="intake-title" onClose={() => setIntakeOpen(false)}>
             <div className="safe-bottom">
-              <div className="flex items-start justify-between gap-4 border-b border-slate-100 p-5 sm:p-7"><div className="flex items-start gap-3"><div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-trust-50 text-trust-600"><Icon name="FileCheck2" /></div><div><h2 id="intake-title" className="text-2xl font-black leading-tight text-slate-950">{c.form.title}</h2><p className="mt-2 text-sm leading-6 text-slate-600">{c.form.subtitle}</p></div></div><button type="button" onClick={() => setIntakeOpen(false)} aria-label={c.form.close} className="rounded-xl p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"><Icon name="X" /></button></div>
+              <div className="flex items-start justify-between gap-4 border-b border-slate-100 p-5 sm:p-7"><div className="flex items-start gap-3"><div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-trust-50 text-trust-600"><Icon name="FileCheck2" /></div><div><h2 id="intake-title" className="text-2xl font-black leading-tight text-slate-950">{c.form.title}</h2><p className="mt-2 text-sm leading-6 text-slate-600">{c.form.subtitle}</p>{selectedExpert && <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-trust-50 px-3 py-1.5 text-xs font-extrabold text-trust-700"><Icon name="BadgeCheck" className="h-3.5 w-3.5" />{c.form.selectedExpert}: {selectedExpert.name}</p>}</div></div><button type="button" onClick={() => setIntakeOpen(false)} aria-label={c.form.close} className="rounded-xl p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"><Icon name="X" /></button></div>
               <form onSubmit={submitDocument} className="space-y-5 p-5 sm:p-7">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="block text-sm font-extrabold text-slate-700">{c.form.name} <span className="font-normal text-slate-400">({c.form.nameHint})</span><input value={form.name} onChange={event => updateField('name', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder={lang === 'ro' ? 'Numele tău' : 'Tvoje ime'} /></label>
-                  <label className="block text-sm font-extrabold text-slate-700">{c.form.email} <span className="text-red-500">*</span><span className="block text-xs font-normal text-slate-400">{c.form.emailHint}</span><input type="email" required value={form.email} onChange={event => updateField('email', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder="vi@email.com" /></label>
+                  <label className="block text-sm font-extrabold text-slate-700">{c.form.email} <span className="text-red-500">*</span><input type="email" required value={form.email} onChange={event => updateField('email', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder="vi@email.com" /></label>
                   <label className="block text-sm font-extrabold text-slate-700">{c.form.phone} <span className="text-red-500">*</span><span className="block text-xs font-normal text-slate-400">{c.form.phoneHint}</span><input type="tel" required value={form.phone} onChange={event => updateField('phone', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder="+420 …" /></label>
-                  <label className="block text-sm font-extrabold text-slate-700">{c.form.language}<select value={form.communication} onChange={event => updateField('communication', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100"><option value="exyu">🇧🇦 🇭🇷 🇷🇸 Ex-Yu</option><option value="ro">🇷🇴 Română</option><option value="cs">Češki / Čeština</option></select></label>
+                  <label className="block text-sm font-extrabold text-slate-700">{c.form.problem}<select value={form.problem} onChange={event => updateField('problem', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100"><option value="">{c.form.chooseProblem}</option>{problems.map(problem => <option key={problem.id} value={problem.id}>{problem[lang].title}</option>)}<option value="other">{c.form.unsure}</option></select></label>
                 </div>
-                <label className="block text-sm font-extrabold text-slate-700">{c.form.problem}<select value={form.problem} onChange={event => updateField('problem', event.target.value)} className="mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-3.5 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100"><option value="">{c.form.chooseProblem}</option>{problems.map(problem => <option key={problem.id} value={problem.id}>{problem[lang].title}</option>)}<option value="other">{c.form.unsure}</option></select></label>
                 <label className="block text-sm font-extrabold text-slate-700">{c.form.description}<textarea value={form.description} onChange={event => updateField('description', event.target.value)} rows="3" className="mt-2 w-full resize-none rounded-xl border border-slate-300 px-3.5 py-3 font-normal outline-none transition focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder={c.form.descriptionPlaceholder} /></label>
                 <div><p className="text-sm font-extrabold text-slate-700">{c.form.document} <span className="text-red-500">*</span></p><div className={cx('mt-2 rounded-2xl border-2 border-dashed p-5 transition', drag ? 'border-trust-600 bg-trust-50' : 'border-slate-300 bg-slate-50')} onDragOver={event => { event.preventDefault(); setDrag(true); }} onDragLeave={() => setDrag(false)} onDrop={event => { event.preventDefault(); setDrag(false); pick(event.dataTransfer.files); }}><input ref={input} type="file" className="hidden" accept=".pdf,.jpg,.jpeg,.png" capture="environment" onChange={event => pick(event.target.files)} /><div className="flex flex-col items-center text-center"><Icon name="Camera" className="h-8 w-8 text-trust-600" /><p className="mt-2 text-sm font-bold text-slate-700">{file ? file.name : c.form.camera}</p><p className="mt-1 text-xs text-slate-500">{c.form.fileHint} · {c.hero.fileNote}</p><button type="button" onClick={() => input.current?.click()} className="mt-4 min-h-11 rounded-xl border border-trust-200 bg-white px-4 py-2.5 text-sm font-extrabold text-trust-700 transition hover:bg-trust-50">{file ? c.form.changeFile : c.form.camera}</button></div></div></div>
                 <label className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-700"><input type="checkbox" checked={form.consent} onChange={event => updateField('consent', event.target.checked)} className="mt-1 h-5 w-5 shrink-0 rounded border-slate-300 text-trust-600 focus:ring-trust-500" />{c.form.consent}</label>
                 <button type="submit" disabled={submission.state === 'loading'} className="flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl bg-trust-600 px-5 py-4 text-base font-extrabold text-white shadow-lg shadow-trust-600/20 transition hover:bg-trust-700 focus:outline-none focus:ring-4 focus:ring-trust-100 disabled:cursor-wait disabled:opacity-60">{submission.state === 'loading' ? c.form.sending : c.form.submit}<Icon name="ArrowRight" /></button>
+                <p className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm font-bold leading-6 text-amber-950">{c.form.disclaimer}</p>
                 <p className="flex items-start gap-2 text-xs leading-5 text-slate-500"><Icon name="ShieldCheck" className="mt-0.5 h-4 w-4 shrink-0 text-safe-600" />{c.form.security}</p>
                 {submission.message && <div role="status" className={cx('rounded-xl border px-4 py-3 text-sm leading-6', submission.state === 'success' ? 'border-emerald-200 bg-emerald-50 text-emerald-800' : submission.state === 'error' ? 'border-red-200 bg-red-50 text-red-800' : 'border-trust-200 bg-trust-50 text-trust-800')}>{submission.message}</div>}
               </form>
             </div>
+          </Modal>}
+
+          {accessOpen && <Modal titleId="access-title" onClose={() => setAccessOpen(false)}>
+            <div className="p-5 sm:p-7"><div className="flex items-start justify-between gap-4"><div><span className="inline-flex rounded-full bg-trust-50 px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-trust-700">BalkanCZ Asistent</span><h2 id="access-title" className="mt-3 text-2xl font-black text-slate-950">{c.nav.accessTitle}</h2><p className="mt-2 leading-6 text-slate-600">{c.nav.accessText}</p></div><button type="button" onClick={() => setAccessOpen(false)} aria-label={c.nav.close} className="rounded-xl p-2 text-slate-400 hover:bg-slate-100"><Icon name="X" /></button></div><div className="mt-7 grid gap-3 sm:grid-cols-2"><button type="button" onClick={() => { setAccessOpen(false); document.getElementById('strucnjaci')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex min-h-14 items-center justify-center gap-2 rounded-2xl border border-trust-200 bg-trust-50 px-4 py-3 text-sm font-extrabold text-trust-700 hover:bg-trust-100"><Icon name="BadgeCheck" />{c.nav.login}</button><button type="button" onClick={() => { setAccessOpen(false); openIntake(''); }} className="flex min-h-14 items-center justify-center gap-2 rounded-2xl bg-trust-600 px-4 py-3 text-sm font-extrabold text-white hover:bg-trust-700"><Icon name="Megaphone" />{c.nav.post}</button></div></div>
           </Modal>}
         </div>
       );
@@ -491,3 +566,4 @@
   </script>
 </body>
 </html>
+
