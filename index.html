@@ -152,6 +152,9 @@
           inputPlaceholder: 'Napiši svoje pitanje…',
           send: 'Pošalji',
           close: 'Zatvori asistenta',
+          thinking: 'Provjeravam pitanje…',
+          demoLabel: 'Demo odgovor',
+          liveLabel: 'AI odgovor',
           disclaimer: 'AI daje opće informacije, ne pravni savjet.'
         },
         footer: {
@@ -253,6 +256,9 @@
           inputPlaceholder: 'Scrie întrebarea ta…',
           send: 'Trimite',
           close: 'Închide asistentul',
+          thinking: 'Verific întrebarea…',
+          demoLabel: 'Răspuns demo',
+          liveLabel: 'Răspuns AI',
           disclaimer: 'AI oferă informații generale, nu consultanță juridică.'
         },
         footer: {
@@ -359,6 +365,9 @@
       const [chatDraft, setChatDraft] = useState('');
       const [chatQuestion, setChatQuestion] = useState('');
       const [chatAsked, setChatAsked] = useState(false);
+      const [chatAnswer, setChatAnswer] = useState('');
+      const [chatMode, setChatMode] = useState('demo');
+      const [chatState, setChatState] = useState('idle');
       const [expanded, setExpanded] = useState(null);
       const [file, setFile] = useState(null);
       const [drag, setDrag] = useState(false);
@@ -375,6 +384,9 @@
         setLang(nextLanguage);
         setChatAsked(false);
         setChatQuestion('');
+        setChatAnswer('');
+        setChatMode('demo');
+        setChatState('idle');
       };
       const currentProblem = problems.find(problem => problem.id === form.problem);
       const selectedProblemTitle = currentProblem?.[lang]?.title || (lang === 'ro' ? 'Altă situație' : 'Druga situacija');
@@ -446,11 +458,30 @@
         }
       };
 
-      const askChat = question => {
+      const askChat = async question => {
         const nextQuestion = (question || '').trim() || c.chat.mockUser;
         setChatQuestion(nextQuestion);
         setChatAsked(true);
         setChatOpen(true);
+        setChatAnswer('');
+        setChatMode('demo');
+        setChatState('loading');
+        try {
+          const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question: nextQuestion, language: lang })
+          });
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || !result.answer) throw new Error('Chat unavailable');
+          setChatAnswer(result.answer);
+          setChatMode(result.mode === 'openai' ? 'openai' : 'demo');
+          setChatState('ready');
+        } catch {
+          setChatAnswer(c.chat.answer);
+          setChatMode('demo');
+          setChatState('ready');
+        }
       };
 
       const toneClasses = {
@@ -530,7 +561,7 @@
 
           <footer className="bg-slate-950 text-slate-300"><div className="mx-auto flex max-w-7xl flex-col gap-7 px-4 py-12 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:px-8"><div className="max-w-3xl"><div className="flex items-center gap-3"><div className="grid h-10 w-10 place-items-center rounded-2xl bg-trust-600 font-black text-white">B</div><span className="font-extrabold text-white">{c.brand}</span></div><h2 className="mt-6 text-xl font-extrabold text-white">{c.footer.title}</h2><p className="mt-3 text-sm leading-7 text-slate-400">{c.footer.disclaimer}</p></div><p className="shrink-0 text-xs font-semibold text-slate-500">{c.footer.demo}</p></div></footer>
 
-          {chatOpen && <div className="fixed bottom-24 right-4 z-40 w-[calc(100vw-2rem)] max-w-sm overflow-hidden rounded-3xl border border-trust-200 bg-white shadow-2xl sm:bottom-24 sm:right-6" role="dialog" aria-label={c.chat.title}><div className="flex items-center justify-between bg-trust-600 px-4 py-4 text-white"><div className="flex items-center gap-3"><div className="grid h-10 w-10 place-items-center rounded-2xl bg-white/15"><Icon name="Bot" /></div><div><p className="font-extrabold">{c.chat.title}</p><p className="text-xs text-trust-100">{c.chat.status}</p></div></div><button type="button" onClick={() => setChatOpen(false)} aria-label={c.chat.close} className="rounded-lg p-2 text-trust-100 hover:bg-white/10 hover:text-white"><Icon name="X" /></button></div><div className="max-h-[55vh] space-y-4 overflow-y-auto bg-slate-50 p-4"><div className="ml-8 rounded-2xl rounded-tr-sm bg-trust-600 p-3 text-sm leading-6 text-white">{chatAsked ? chatQuestion : c.chat.mockUser}</div><div className="mr-4 rounded-2xl rounded-tl-sm border border-slate-200 bg-white p-3 text-sm leading-6 text-slate-700 shadow-sm">{c.chat.answer}</div><button type="button" onClick={() => { setChatOpen(false); openIntake(); }} className="flex w-full items-center justify-center gap-2 rounded-xl border border-trust-200 bg-white px-4 py-3 text-sm font-extrabold text-trust-700 transition hover:bg-trust-50"><Icon name="FileCheck2" className="h-4 w-4" />{c.chat.sendToExpert}</button><p className="text-center text-[11px] leading-5 text-slate-500">{c.chat.disclaimer}</p></div><form onSubmit={event => { event.preventDefault(); askChat(chatDraft); }} className="flex gap-2 border-t border-slate-200 bg-white p-3"><input value={chatDraft} onChange={event => setChatDraft(event.target.value)} className="min-w-0 flex-1 rounded-xl border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder={c.chat.inputPlaceholder} /><button type="submit" aria-label={c.chat.send} className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-trust-600 text-white hover:bg-trust-700"><Icon name="Send" className="h-4 w-4" /></button></form></div>}
+          {chatOpen && <div className="fixed bottom-24 right-4 z-40 w-[calc(100vw-2rem)] max-w-sm overflow-hidden rounded-3xl border border-trust-200 bg-white shadow-2xl sm:bottom-24 sm:right-6" role="dialog" aria-label={c.chat.title}><div className="flex items-center justify-between bg-trust-600 px-4 py-4 text-white"><div className="flex items-center gap-3"><div className="grid h-10 w-10 place-items-center rounded-2xl bg-white/15"><Icon name="Bot" /></div><div><p className="font-extrabold">{c.chat.title}</p><p className="text-xs text-trust-100">{c.chat.status}</p></div></div><button type="button" onClick={() => setChatOpen(false)} aria-label={c.chat.close} className="rounded-lg p-2 text-trust-100 hover:bg-white/10 hover:text-white"><Icon name="X" /></button></div><div className="max-h-[55vh] space-y-4 overflow-y-auto bg-slate-50 p-4"><div className="ml-8 rounded-2xl rounded-tr-sm bg-trust-600 p-3 text-sm leading-6 text-white">{chatAsked ? chatQuestion : c.chat.mockUser}</div><div className="mr-4 rounded-2xl rounded-tl-sm border border-slate-200 bg-white p-3 text-sm leading-6 text-slate-700 shadow-sm"><div className="mb-2 text-[10px] font-extrabold uppercase tracking-wide text-trust-600">{chatState === 'loading' ? c.chat.thinking : (chatMode === 'openai' ? c.chat.liveLabel : c.chat.demoLabel)}</div>{chatState === 'loading' ? <span className="inline-flex items-center gap-1"><span className="h-1.5 w-1.5 animate-bounce rounded-full bg-trust-400" /><span className="h-1.5 w-1.5 animate-bounce rounded-full bg-trust-400 [animation-delay:120ms]" /><span className="h-1.5 w-1.5 animate-bounce rounded-full bg-trust-400 [animation-delay:240ms]" /></span> : (chatAnswer || c.chat.answer)}</div><button type="button" onClick={() => { setChatOpen(false); openIntake(); }} className="flex w-full items-center justify-center gap-2 rounded-xl border border-trust-200 bg-white px-4 py-3 text-sm font-extrabold text-trust-700 transition hover:bg-trust-50"><Icon name="FileCheck2" className="h-4 w-4" />{c.chat.sendToExpert}</button><p className="text-center text-[11px] leading-5 text-slate-500">{c.chat.disclaimer}</p></div><form onSubmit={event => { event.preventDefault(); askChat(chatDraft); }} className="flex gap-2 border-t border-slate-200 bg-white p-3"><input value={chatDraft} onChange={event => setChatDraft(event.target.value)} className="min-w-0 flex-1 rounded-xl border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-trust-500 focus:ring-4 focus:ring-trust-100" placeholder={c.chat.inputPlaceholder} /><button type="submit" aria-label={c.chat.send} className="grid h-11 w-11 shrink-0 rounded-xl bg-trust-600 text-white hover:bg-trust-700"><Icon name="Send" className="h-4 w-4" /></button></form></div>}
 
           <button type="button" onClick={() => setChatOpen(previous => !previous)} aria-label={chatOpen ? c.chat.close : c.chat.title} className="fixed bottom-5 right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-trust-600 text-white shadow-xl shadow-trust-600/30 transition hover:scale-105 hover:bg-trust-700 focus:outline-none focus:ring-4 focus:ring-trust-100 sm:bottom-6 sm:right-6"><Icon name={chatOpen ? 'X' : 'MessageCircle'} className="h-6 w-6" /></button>
 
@@ -566,4 +597,3 @@
   </script>
 </body>
 </html>
-

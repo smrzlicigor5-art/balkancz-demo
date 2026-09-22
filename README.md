@@ -1,6 +1,6 @@
 # BalkanCZ Asistent / Asistenta.ro — Problem-First Demo
 
-Mobile-first React + Tailwind demo for Ex-Yu and Romanian communities living in Czechia. It combines problem-first triage, a verified expert directory and a mock AI assistant. The first step is education and a free document assessment; the demo does not display fixed prices or shopping carts.
+Mobile-first React + Tailwind demo for Ex-Yu and Romanian communities living in Czechia. It combines problem-first triage, a verified expert directory and a working AI assistant demo. The first step is education and a free document assessment; the demo does not display fixed prices or shopping carts.
 
 ## Included
 
@@ -12,7 +12,8 @@ Mobile-first React + Tailwind demo for Ex-Yu and Romanian communities living in 
 - Vercel `/api/submit` proxy that keeps the Make webhook URL out of the browser
 - six expandable life-event problem cards with basic rules and relevant experts
 - verified expert directory with compact profile cards
-- floating mock AI chat widget with escalation to human help
+- floating AI chat widget with a demo fallback and optional OpenAI connection
+- hero chat and floating chat both call the Vercel `/api/chat` endpoint
 - mobile-first intake modal with camera-friendly upload
 - Make.com setup guide in [`MAKE_SETUP.md`](./MAKE_SETUP.md)
 
@@ -23,6 +24,8 @@ React, Babel, Tailwind and Lucide are loaded via CDN. Vercel automatically detec
 ```text
 MAKE_WEBHOOK_URL=https://hook.eu1.make.com/...
 MAKE_WEBHOOK_API_KEY=<optional>
+OPENAI_API_KEY=<optional; enables live OpenAI answers>
+OPENAI_CHAT_MODEL=gpt-4o-mini
 ```
 
-Without `MAKE_WEBHOOK_URL`, the form intentionally returns a clear “Make webhook još nije konfiguriran” message. No OpenAI, Telegram, Gmail or Make secret is committed to the repository.
+Without `MAKE_WEBHOOK_URL`, the form intentionally returns a clear “Make webhook još nije konfiguriran” message. Without `OPENAI_API_KEY`, the chat still works using a small deterministic demo response; adding the key enables the live OpenAI path. No OpenAI, Telegram, Gmail or Make secret is committed to the repository.
